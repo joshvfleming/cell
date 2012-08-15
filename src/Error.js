@@ -7,7 +7,13 @@ cblisp.Error = (function() {
 
   Error.assertArgCount = function assertArgCount(args, count) {
     if (args.length !== count) {
-      raise("Expected " + count + " arguments, got " + args.length);
+      throw("Expected " + count + " arguments, got " + args.length);
+    }
+  }
+
+  Error.assertEvenArgCount = function assertEvenArgCount(args) {
+    if (args.length % 2 !== 0) {
+      throw("Expected an even number arguments, got " + args.length);
     }
   }
 
