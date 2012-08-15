@@ -4,16 +4,12 @@ var cblisp = (function() {
   Lisp.cond = function cond(env, args) {
     Lisp.Error.assertEvenArgCount(args);
 
-    var condQueue = [];
     for (var i=0, l=args.length; i<l; i++) {
-      if (condQueue.length < 2) {
-        condQueue.push(args[i]);
-      } else {
-        var pred = condQueue.shift();
-        var val = consQueue.shift();
-        if (pred.eval(env) === Lisp.Atom.TRUE) {
-          return val.eval(env);
-        }
+      var arg = args[i];
+      var pred = arg.first().eval(env);
+
+      if (pred.eval(env) === Lisp.Atom.TRUE) {
+        return arg.rest().eval(env);
       }
     }
 
