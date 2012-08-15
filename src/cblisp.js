@@ -8,7 +8,7 @@ var cblisp = (function() {
       var arg = args[i];
       var pred = arg.first().eval(env);
 
-      if (pred.eval(env) === Lisp.Atom.TRUE) {
+      if (pred === Lisp.Atom.TRUE) {
         return arg.rest().eval(env);
       }
     }
