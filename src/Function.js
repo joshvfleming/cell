@@ -7,8 +7,8 @@ cell.Function = (function() {
     this.fn = fn;
   };
 
-  Function.prototype.eval = function eval(env) {
-    return this.fn(env);
+  Function.prototype.eval = function eval(env, args) {
+    return this.fn(env, args);
   };
 
   return Function;

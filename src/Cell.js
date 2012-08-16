@@ -13,6 +13,17 @@ cell.Cell = (function() {
     return cell;
   };
 
+  Cell.fromArray = function(arr) {
+    var arrDup = arr.slice();
+    var curr = arrDup.shift();
+
+    if (curr) {
+      return Cell.cons(curr, Cell.fromArray(arrDup));
+    } 
+
+    return null;
+  };
+
   /* Returns the head, or first element of the list. */
   Cell.prototype.first = function first() {
     return this.left;
