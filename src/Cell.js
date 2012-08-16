@@ -24,6 +24,18 @@ cell.Cell = (function() {
     return null;
   };
 
+  Cell.count = function(head) {
+    var c = 0;
+
+    var curr = head;
+    while (curr && curr.first()) {
+      c++;
+      curr = curr.rest();
+    }
+
+    return c;
+  };
+
   /* Returns the head, or first element of the list. */
   Cell.prototype.first = function first() {
     return this.left;

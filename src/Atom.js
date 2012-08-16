@@ -90,7 +90,7 @@ cell.Atom = (function() {
       return true;
     };
 
-    Symbol.prototype.eq = function eq(other) {
+    Keyword.prototype.eq = function eq(other) {
       return this === other;
     }
 

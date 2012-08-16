@@ -34,7 +34,7 @@ var cell = (function() {
   };
 
   Lisp.eq = function eq(env, args) {
-    //cell.Error.assertArgCount(args, 2);
+    cell.Error.assertArgCount(args, 2);
     return args.first().eval(env).eq(args.rest().first().eval(env));
   };
 

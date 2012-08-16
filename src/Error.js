@@ -6,14 +6,16 @@ cell.Error = (function() {
   var Error = {};
 
   Error.assertArgCount = function assertArgCount(args, count) {
-    if (args.length !== count) {
-      throw("Expected " + count + " arguments, got " + args.length);
+    var argCount = cell.Cell.count(args);
+    if (argCount !== count) {
+      throw("Expected " + count + " arguments, got " + argCount);
     }
   }
 
   Error.assertEvenArgCount = function assertEvenArgCount(args) {
-    if (args.length % 2 !== 0) {
-      throw("Expected an even number arguments, got " + args.length);
+    var argCount = cell.Cell.count(args);
+    if (argCount % 2 !== 0) {
+      throw("Expected an even number arguments, got " + argCount);
     }
   }
 
