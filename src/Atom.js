@@ -42,7 +42,7 @@ cell.Atom = (function() {
     String.PATTERN = /".+"/;
 
     String.prototype.eval = function eval() {
-      return this.data;
+      return this;
     };
 
     String.prototype.isAtom = function isAtom() {

@@ -1,5 +1,8 @@
 var cell = (function() {
-  var Lisp = {};
+  var cell = {};
+  cell.Lisp = {};
+
+  var Lisp = cell.Lisp;
 
   Lisp.cond = function cond(env, args) {
     Lisp.Error.assertEvenArgCount(args);
@@ -65,5 +68,5 @@ var cell = (function() {
     return val;
   };
 
-  return Lisp;
+  return cell;
 })();

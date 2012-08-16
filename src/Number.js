@@ -10,7 +10,7 @@ cell.Number = (function() {
   Number.PATTERN = /\-?\d+(\.\d+)?(e\-?\d+)?/;
 
   Number.prototype.eval = function eval() {
-    return this.data;
+    return this;
   };
 
   return Number;
