@@ -2,7 +2,7 @@
  *
  * This is the list representation class.
  */
-cblisp.List = (function() {
+cell.List = (function() {
   var List = function(data) {
     this.data = data || [];
   };

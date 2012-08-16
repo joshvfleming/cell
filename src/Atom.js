@@ -2,7 +2,7 @@
  *
  * This is the atom representation class.
  */
-cblisp.Atom = (function() {
+cell.Atom = (function() {
   var Atom = {};
 
   Atom.TRUE = true;
@@ -56,7 +56,7 @@ cblisp.Atom = (function() {
    *
    * This is the symbol representation class.
    */
-  cblisp.Keyword = (function() {
+  Atom.Keyword = (function() {
     var Keyword = function(name) {
       this.name = name;
     };

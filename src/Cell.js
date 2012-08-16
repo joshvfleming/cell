@@ -2,7 +2,7 @@
  *
  * This is the cell representation class.
  */
-cblisp.Cell = (function() {
+cell.Cell = (function() {
   var Cell = function(left, right) {
     this.left = left || null;
     this.right = right || null;

@@ -2,7 +2,7 @@
  *
  * This is the error representation class.
  */
-cblisp.Error = (function() {
+cell.Error = (function() {
   var Error = {};
 
   Error.assertArgCount = function assertArgCount(args, count) {

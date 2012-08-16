@@ -2,7 +2,7 @@
  *
  * This is the symbol representation class.
  */
-cblisp.Reader = (function() {
+cell.Reader = (function() {
   var Reader = function() {
   };
 

@@ -3,7 +3,7 @@
  * This is the environment representation class. Environment is a
  * dynamic, hierarchical binding space.
  */
-cblisp.Environment = (function() {
+cell.Environment = (function() {
   var Environment = function(parent) {
     this.parent = parent || null;
     this.bindings = {};

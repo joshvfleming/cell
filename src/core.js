@@ -1,4 +1,4 @@
-var cblisp = (function() {
+var cell = (function() {
   var Lisp = {};
 
   Lisp.cond = function cond(env, args) {

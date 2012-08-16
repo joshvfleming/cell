@@ -2,7 +2,7 @@
  *
  * This is the number representation class.
  */
-cblisp.Number = (function() {
+cell.Number = (function() {
   var Number = function(data) {
     this.data = data || null;
   };
