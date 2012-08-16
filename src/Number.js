@@ -13,6 +13,10 @@ cell.Number = (function() {
     return this;
   };
 
+  Number.prototype.eq = function eq(other) {
+    return this.data === other.data;
+  }
+
   return Number;
 })();
 

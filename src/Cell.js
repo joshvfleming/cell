@@ -41,6 +41,13 @@ cell.Cell = (function() {
     return Cell.cons(val, this);
   };
 
+  /* Cells are eval'd as function calls. */
+  Cell.prototype.eval = function eval(env) {
+    var fnSym = this.first().eval(env);
+
+    return fnSym.eval(env, this.rest());
+  };
+
   return Cell;
 })();
 

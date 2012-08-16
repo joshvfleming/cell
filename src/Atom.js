@@ -27,6 +27,10 @@ cell.Atom = (function() {
       return true;
     };
 
+    Symbol.prototype.eq = function eq(other) {
+      return this.data === other.data;
+    }
+
     return Symbol;
   })();
 
@@ -48,6 +52,10 @@ cell.Atom = (function() {
     String.prototype.isAtom = function isAtom() {
       return true;
     };
+
+    String.prototype.eq = function eq(other) {
+      return this.data === other.data;
+    }
 
     return String;
   })();
@@ -81,6 +89,10 @@ cell.Atom = (function() {
     Keyword.prototype.isAtom = function isAtom() {
       return true;
     };
+
+    Symbol.prototype.eq = function eq(other) {
+      return this === other;
+    }
 
     return Keyword;
   })();
