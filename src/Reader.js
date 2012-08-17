@@ -12,7 +12,7 @@ cell.Reader = (function() {
   
   var WHITESPACE_PATTERN = /[\s\,]+/;
 
-  var Reader = function(str) {
+  var Reader = function Reader(str) {
     this.index = 0;
     this.tokens = this.lex(str);
   };

@@ -40,28 +40,29 @@ var cell = (function() {
 
   Lisp.quote = function quote(env, args) {
     cell.Error.assertArgCount(args, 1);
-    return args[0];
+    return args.first();
   };
 
   Lisp.first = function first(env, args) {
     cell.Error.assertArgCount(args, 1);
-    return args[0].first().eval(env);
+    return args.first().first().eval(env);
   };
 
   Lisp.rest = function rest(env, args) {
     cell.Error.assertArgCount(args, 1);
-    return args[0].rest();
+    return args.first().rest();
   };
 
   Lisp.cons = function cons(env, args) {
     cell.Error.assertArgCount(args, 2);
-    return Lisp.Cell.cons(args[0].eval(env), args[1].eval(env));
+    return Lisp.Cell.cons(args.first().eval(env),
+                          args.first().rest().first().eval(env));
   };
 
   Lisp.atom = function atom(env, args) {
     cell.Error.assertArgCount(args, 1);
 
-    var val = args[0].eval(env);
+    var val = args.first().eval(env);
 
     if (val === Lisp.Atom.TRUE ||
         val === Lisp.Atom.FALSE ||
@@ -75,8 +76,8 @@ var cell = (function() {
   Lisp.def = function def(env, args) {
     cell.Error.assertArgCount(args, 2);
 
-    var name = args[0];
-    var val = args[1].eval(env);
+    var name = args.first();
+    var val = args.rest().first().eval(env);
     env.set(name, val);
 
     return val;

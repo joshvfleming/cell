@@ -13,7 +13,7 @@ cell.Atom = (function() {
    * This is the symbol representation class.
    */
   Atom.Symbol = (function() {
-    var Symbol = function(data) {
+    var Symbol = function Symbol(data) {
       this.data = data || null;
     };
 
@@ -29,7 +29,11 @@ cell.Atom = (function() {
 
     Symbol.prototype.eq = function eq(other) {
       return this.data === other.data;
-    }
+    };
+
+    Symbol.prototype.toString = function toString() {
+      return this.data;
+    };
 
     return Symbol;
   })();
@@ -55,7 +59,7 @@ cell.Atom = (function() {
 
     String.prototype.eq = function eq(other) {
       return this.data === other.data;
-    }
+    };
 
     return String;
   })();
@@ -65,7 +69,7 @@ cell.Atom = (function() {
    * This is the symbol representation class.
    */
   Atom.Keyword = (function() {
-    var Keyword = function(name) {
+    var Keyword = function Keyword(name) {
       this.name = name;
     };
 
@@ -92,7 +96,7 @@ cell.Atom = (function() {
 
     Keyword.prototype.eq = function eq(other) {
       return this === other;
-    }
+    };
 
     return Keyword;
   })();

@@ -10,7 +10,7 @@ describe("Reader", function() {
     var r = new cell.Reader("(eq 1 2)");
     var f = r.read();
 
-    expect(cell.Cell.count(f)).toBe(3);
+    expect(f.count()).toBe(3);
 
     var token = f.first();
     expect(token.data).toBe('eq');
@@ -26,7 +26,7 @@ describe("Reader", function() {
     var r = new cell.Reader("(=> (a b) (+ a b))");
     var f = r.read();
 
-    expect(cell.Cell.count(f)).toBe(3);
+    expect(f.count()).toBe(3);
 
     var token = f.first();
     expect(token.data).toBe('=>');

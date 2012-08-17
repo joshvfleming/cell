@@ -24,18 +24,6 @@ cell.Cell = (function() {
     return null;
   };
 
-  Cell.count = function(head) {
-    var c = 0;
-
-    var curr = head;
-    while (curr && curr.first()) {
-      c++;
-      curr = curr.rest();
-    }
-
-    return c;
-  };
-
   /* Returns the head, or first element of the list. */
   Cell.prototype.first = function first() {
     return this.left;
@@ -59,6 +47,34 @@ cell.Cell = (function() {
 
     return fnSym.eval(env, this.rest());
   };
+
+  /* Returns a count of list items. */
+  Cell.prototype.count = function count() {
+    var c = 0;
+
+    this.each(function() {
+      c++;
+    });
+
+    return c;
+  };
+
+  /* Calls the callback once for each item in the list. */
+  Cell.prototype.each = function each(callback) {
+    var c = 0;
+
+    if (this.first()) {
+      callback(this.first());
+    }
+
+    var curr = this.rest();
+    while (curr && curr.first()) {
+      callback(curr.first());
+      curr = curr.rest();
+    }
+
+    return c;
+  }
 
   return Cell;
 })();
