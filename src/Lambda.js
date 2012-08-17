@@ -4,15 +4,16 @@
  */
 cell.Lambda = (function() {
   var Lambda = function Lambda(env, argNames, forms) {
+    this.env = env;
     this.argNames = argNames;
     this.argCount = argnames.count();
     this.forms = forms;
   };
 
-  Lambda.prototype.eval = function eval(env, args) {
+  Lambda.prototype.eval = function eval(callEnv, args) {
     cell.Error.assertArgCount(args, this.argCount);
 
-    var env = new cell.Environment(env);
+    var env = new cell.Environment(this.env);
     env.setAll(this.argNames, args);
 
     this.forms.each(function(form) {

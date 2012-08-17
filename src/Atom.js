@@ -5,9 +5,6 @@
 cell.Atom = (function() {
   var Atom = function Atom(){};
 
-  Atom.TRUE = true;
-  Atom.FALSE = false;
-
   Atom.prototype.isAtom = function isAtom() {
     return true;
   };

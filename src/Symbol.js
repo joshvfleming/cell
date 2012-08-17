@@ -24,5 +24,9 @@ cell.Symbol = (function() {
     return this.data;
   };
 
+  // special symbols
+  cell.TRUE = new Symbol("true");
+  cell.FALSE = new Symbol("false");
+
   return Symbol;
 })();
