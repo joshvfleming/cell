@@ -22,7 +22,7 @@ describe("Core", function() {
     cell.init()
     expect(f.eval(cell.environment).data).toBe(10);
 
-    var r = new cell.Reader("(* 117 2)");
+    var r = new cell.Reader("(* 117 (+ 1 1))");
     var f = r.read()
     cell.init()
     expect(f.eval(cell.environment).data).toBe(234);
