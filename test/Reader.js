@@ -16,10 +16,10 @@ describe("Reader", function() {
     expect(token.data).toBe('eq');
 
     token = f.rest().first();
-    expect(token.data).toBe('1');
+    expect(token.data).toBe(1);
 
     token = f.rest().rest().first();
-    expect(token.data).toBe('2');
+    expect(token.data).toBe(2);
   });
 
   it("should handle nested expressions", function() {

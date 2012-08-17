@@ -4,6 +4,7 @@ var cell = (function() {
       var env = new cell.Environment();
       cell.environment = env;
       
+      // set initial bindings
       env.set('cond', new cell.Function(cell.Lisp.cond));
       env.set('eq', new cell.Function(cell.Lisp.eq));
       env.set('quote', new cell.Function(cell.Lisp.quote));
@@ -13,9 +14,17 @@ var cell = (function() {
       env.set('atom', new cell.Function(cell.Lisp.atom));
       env.set('def', new cell.Function(cell.Lisp.def));
 
+      // lambda
       env.set('lambda', new cell.Function(function lambda(env, args) {
         return new cell.Lambda(env, args.first(), args.rest());
       }));
+
+      // number builtins
+      env.set('+', new cell.Function(cell.Lisp.plus));
+      env.set('-', new cell.Function(cell.Lisp.minus));
+      env.set('*', new cell.Function(cell.Lisp.mult));
+      env.set('/', new cell.Function(cell.Lisp.div));
+      env.set('mod', new cell.Function(cell.Lisp.mod));
     }
   };
 
@@ -87,11 +96,34 @@ var cell = (function() {
     return val;
   };
 
-  cell.test = function() {
-    var r = new cell.Reader("((lambda (a) (eq a 2)) 5)");
-    var f = r.read()
-    cell.init()
-    return f.eval(cell.environment);
+  Lisp.reduce = function reduce(env, fn, args) {
+    var acc = args.first().eval(env);
+
+    args.rest().each(function(arg) {
+      acc = fn.call(acc, arg.eval(env));
+    });
+
+    return acc;
+  };
+
+  Lisp.plus = function plus(env, args) {
+    return Lisp.reduce(env, cell.Number.prototype.plus, args);
+  };
+
+  Lisp.minus = function minus(env, args) {
+    return Lisp.reduce(env, cell.Number.prototype.minus, args);
+  };
+
+  Lisp.mult = function mult(env, args) {
+    return Lisp.reduce(env, cell.Number.prototype.mult, args);
+  };
+
+  Lisp.minus = function div(env, args) {
+    return Lisp.reduce(env, cell.Number.prototype.div, args);
+  };
+
+  Lisp.minus = function mod(env, args) {
+    return Lisp.reduce(env, cell.Number.prototype.mod, args);
   };
 
   return cell;
