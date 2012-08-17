@@ -74,7 +74,17 @@ cell.Cell = (function() {
     }
 
     return c;
-  }
+  };
+
+  Cell.prototype.toString = function() {
+    var items = [];
+ 
+    this.each(function(item) {
+      items.push(item.toString());
+    });
+
+    return '(' + items.join(' ') + ')';
+  };
 
   return Cell;
 })();

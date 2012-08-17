@@ -1,11 +1,11 @@
 ;; cell core
 
-;; this is dec
+;; decrements the number
 (def dec
   (=> (n)
       (- n 1)))
 
-;; this is incr
+;; increments the number
 (def inc
   (=> (n)
       (+ n 1)))
