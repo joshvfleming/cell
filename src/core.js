@@ -5,14 +5,14 @@ var cell = (function() {
       cell.environment = env;
       
       // set initial bindings
-      env.set('cond', new cell.Function(cell.Lisp.cond));
-      env.set('eq', new cell.Function(cell.Lisp.eq));
-      env.set('quote', new cell.Function(cell.Lisp.quote));
-      env.set('first', new cell.Function(cell.Lisp.first));
-      env.set('rest', new cell.Function(cell.Lisp.rest));
-      env.set('cons', new cell.Function(cell.Lisp.cons));
-      env.set('atom', new cell.Function(cell.Lisp.atom));
-      env.set('def', new cell.Function(cell.Lisp.def));
+      env.set('cond', new cell.Function(cell.cond));
+      env.set('eq', new cell.Function(cell.eq));
+      env.set('quote', new cell.Function(cell.quote));
+      env.set('first', new cell.Function(cell.first));
+      env.set('rest', new cell.Function(cell.rest));
+      env.set('cons', new cell.Function(cell.cons));
+      env.set('atom', new cell.Function(cell.atom));
+      env.set('def', new cell.Function(cell.def));
 
       // lambda
       env.set('lambda', new cell.Function(function lambda(env, args) {
@@ -20,73 +20,70 @@ var cell = (function() {
       }));
 
       // number builtins
-      env.set('+', new cell.Function(cell.Lisp.plus));
-      env.set('-', new cell.Function(cell.Lisp.minus));
-      env.set('*', new cell.Function(cell.Lisp.mult));
-      env.set('/', new cell.Function(cell.Lisp.div));
-      env.set('mod', new cell.Function(cell.Lisp.mod));
+      env.set('+', new cell.Function(cell.plus));
+      env.set('-', new cell.Function(cell.minus));
+      env.set('*', new cell.Function(cell.mult));
+      env.set('/', new cell.Function(cell.div));
+      env.set('mod', new cell.Function(cell.mod));
     }
   };
 
-  cell.Lisp = {};
-  var Lisp = cell.Lisp;
-
-  Lisp.cond = function cond(env, args) {
+  cell.cond = function cond(env, args) {
     cell.Error.assertEvenArgCount(args);
 
     for (var i=0, l=args.length; i<l; i++) {
       var arg = args[i];
       var pred = arg.first().eval(env);
 
-      if (pred === Lisp.Atom.TRUE) {
+      if (pred === cell.TRUE) {
         return arg.rest().eval(env);
       }
     }
 
-    return Lisp.Atom.FALSE;
+    return cell.FALSE;
   };
 
-  Lisp.eq = function eq(env, args) {
+  cell.eq = function eq(env, args) {
     cell.Error.assertArgCount(args, 2);
     return args.first().eval(env).eq(args.rest().first().eval(env));
   };
 
-  Lisp.quote = function quote(env, args) {
+  cell.quote = function quote(env, args) {
     cell.Error.assertArgCount(args, 1);
     return args.first();
   };
 
-  Lisp.first = function first(env, args) {
+  cell.first = function first(env, args) {
     cell.Error.assertArgCount(args, 1);
     return args.first().first().eval(env);
   };
 
-  Lisp.rest = function rest(env, args) {
+  cell.rest = function rest(env, args) {
     cell.Error.assertArgCount(args, 1);
     return args.first().rest();
   };
 
-  Lisp.cons = function cons(env, args) {
+  cell.cons = function cons(env, args) {
     cell.Error.assertArgCount(args, 2);
-    return Lisp.Cell.cons(args.first().eval(env),
+    return cell.Cell.cons(args.first().eval(env),
                           args.first().rest().first().eval(env));
   };
 
-  Lisp.atom = function atom(env, args) {
+  cell.atom = function atom(env, args) {
     cell.Error.assertArgCount(args, 1);
 
     var val = args.first().eval(env);
 
-    if (val === Lisp.Atom.TRUE ||
-        val === Lisp.Atom.FALSE ||
+    if (val === cell.TRUE ||
+        val === cell.FALSE ||
         (val.isAtom && val.isAtom())) {
-      return Lisp.Atom.TRUE;
+      return cell.TRUE;
     }
 
-    return Lisp.Atom.FALSE;
+    return cell.FALSE;
   };
 
-  Lisp.def = function def(env, args) {
+  cell.def = function def(env, args) {
     cell.Error.assertArgCount(args, 2);
 
     var name = args.first();
@@ -96,7 +93,7 @@ var cell = (function() {
     return val;
   };
 
-  Lisp.reduce = function reduce(env, fn, args) {
+  cell.reduce = function reduce(env, fn, args) {
     var acc = args.first().eval(env);
 
     args.rest().each(function(arg) {
@@ -106,24 +103,24 @@ var cell = (function() {
     return acc;
   };
 
-  Lisp.plus = function plus(env, args) {
-    return Lisp.reduce(env, cell.Number.prototype.plus, args);
+  cell.plus = function plus(env, args) {
+    return cell.reduce(env, cell.Number.prototype.plus, args);
   };
 
-  Lisp.minus = function minus(env, args) {
-    return Lisp.reduce(env, cell.Number.prototype.minus, args);
+  cell.minus = function minus(env, args) {
+    return cell.reduce(env, cell.Number.prototype.minus, args);
   };
 
-  Lisp.mult = function mult(env, args) {
-    return Lisp.reduce(env, cell.Number.prototype.mult, args);
+  cell.mult = function mult(env, args) {
+    return cell.reduce(env, cell.Number.prototype.mult, args);
   };
 
-  Lisp.minus = function div(env, args) {
-    return Lisp.reduce(env, cell.Number.prototype.div, args);
+  cell.minus = function div(env, args) {
+    return cell.reduce(env, cell.Number.prototype.div, args);
   };
 
-  Lisp.minus = function mod(env, args) {
-    return Lisp.reduce(env, cell.Number.prototype.mod, args);
+  cell.minus = function mod(env, args) {
+    return cell.reduce(env, cell.Number.prototype.mod, args);
   };
 
   return cell;
