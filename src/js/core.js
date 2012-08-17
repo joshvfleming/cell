@@ -55,12 +55,12 @@ var cell = (function() {
 
   cell.first = function first(env, args) {
     cell.Error.assertArgCount(args, 1);
-    return args.first().first().eval(env);
+    return args.first().eval(env).first().eval(env);
   };
 
   cell.rest = function rest(env, args) {
     cell.Error.assertArgCount(args, 1);
-    return args.first().rest();
+    return args.first().eval(env).rest();
   };
 
   cell.cons = function cons(env, args) {
