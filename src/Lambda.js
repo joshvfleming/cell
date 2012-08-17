@@ -3,9 +3,9 @@
  * This is the lambda representation class.
  */
 cell.Lambda = (function() {
-  var Lambda = function Lambda(argNames, forms) {
+  var Lambda = function Lambda(env, argNames, forms) {
     this.argNames = argNames;
-    this.argCount = cell.Cell.count(argNames);
+    this.argCount = argnames.count();
     this.forms = forms;
   };
 

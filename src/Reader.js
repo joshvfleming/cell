@@ -77,16 +77,16 @@ cell.Reader = (function() {
       return {type: 'number', value: new cell.Number(word)};
     }
 
-    if (word.match(cell.Atom.String.PATTERN)) {
-      return {type: 'string', value: new cell.Atom.String(word)};
+    if (word.match(cell.String.PATTERN)) {
+      return {type: 'string', value: new cell.String(word)};
     }
 
-    if (word.match(cell.Atom.Keyword.PATTERN)) {
-      return {type: 'keyword', value: new cell.Atom.Keyword(word)};
+    if (word.match(cell.Keyword.PATTERN)) {
+      return {type: 'keyword', value: new cell.Keyword(word)};
     }
 
-    if (word.match(cell.Atom.Symbol.PATTERN)) {
-      return {type: 'symbol', value: new cell.Atom.Symbol(word)};
+    if (word.match(cell.Symbol.PATTERN)) {
+      return {type: 'symbol', value: new cell.Symbol(word)};
     }
 
     return null;

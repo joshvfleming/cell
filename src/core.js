@@ -12,6 +12,10 @@ var cell = (function() {
       env.set('cons', new cell.Function(cell.Lisp.cons));
       env.set('atom', new cell.Function(cell.Lisp.atom));
       env.set('def', new cell.Function(cell.Lisp.def));
+
+      env.set('lambda', new cell.Function(function lambda(env, args) {
+        return new cell.Lambda(args.first(), args.rest());
+      }));
     }
   };
 
