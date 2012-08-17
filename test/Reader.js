@@ -20,6 +20,11 @@ describe("Reader", function() {
 
     token = f.rest().rest().first();
     expect(token.data).toBe(2);
+
+    r = new cell.Reader("(0)");
+    f = r.read();
+
+    expect(f.first().data).toBe(0);
   });
 
   it("should handle nested expressions", function() {

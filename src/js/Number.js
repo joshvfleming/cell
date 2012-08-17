@@ -18,7 +18,7 @@ cell.Number = (function() {
       }
     }
 
-    this.data = data || null;
+    this.data = data;
   };
 
   Number.PATTERN = /\-?\d+(\.\d+)?(e\-?\d+)?/;
