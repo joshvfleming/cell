@@ -1,7 +1,7 @@
 (def dec
-     (lambda (n)
-             (- n 1)))
+  (=> (n)
+      (- n 1)))
 
-(def inc
-     (lambda (n)
-             (+ n 1)))
+(def incr
+  (=> (n)
+      (+ n 1)))

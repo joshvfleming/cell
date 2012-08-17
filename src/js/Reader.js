@@ -9,6 +9,10 @@ cell.Reader = (function() {
     '[': 'open',
     ']': 'close'
   };
+
+  var _aliasSet = {
+    '=>': 'lambda'
+  };
   
   var WHITESPACE_PATTERN = /[\s\,]+/;
 
@@ -73,6 +77,8 @@ cell.Reader = (function() {
 
   var tokenFromBuffer = function(buffer) {
     var word = buffer.join('');
+
+    word = _aliasSet[word] || word;
 
     if (word.match(cell.Number.PATTERN)) {
       return {type: 'number', value: new cell.Number(word)};
