@@ -6,7 +6,7 @@ cell.Lambda = (function() {
   var Lambda = function Lambda(env, argNames, forms) {
     this.env = env;
     this.argNames = argNames;
-    this.argCount = argnames.count();
+    this.argCount = argNames.count();
     this.forms = forms;
   };
 
@@ -16,9 +16,12 @@ cell.Lambda = (function() {
     var env = new cell.Environment(this.env);
     env.setAll(this.argNames, args);
 
+    var result = null;
     this.forms.each(function(form) {
-      form.eval(env);
+      result = form.eval(env);
     });
+
+    return result;
   };
 
   return Lambda;

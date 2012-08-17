@@ -14,6 +14,7 @@ cell.Reader = (function() {
 
   var Reader = function Reader(str) {
     this.index = 0;
+    this.source = str;
     this.tokens = this.lex(str);
   };
 

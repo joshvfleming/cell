@@ -14,7 +14,7 @@ var cell = (function() {
       env.set('def', new cell.Function(cell.Lisp.def));
 
       env.set('lambda', new cell.Function(function lambda(env, args) {
-        return new cell.Lambda(args.first(), args.rest());
+        return new cell.Lambda(env, args.first(), args.rest());
       }));
     }
   };
@@ -85,6 +85,13 @@ var cell = (function() {
     env.set(name, val);
 
     return val;
+  };
+
+  cell.test = function() {
+    var r = new cell.Reader("((lambda (a) (eq a 2)) 5)");
+    var f = r.read()
+    cell.init()
+    return f.eval(cell.environment);
   };
 
   return cell;
