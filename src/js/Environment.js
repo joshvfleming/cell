@@ -26,10 +26,10 @@ cell.Environment = (function() {
 
   /* Sets all of the bindings by name to the values specified in
    * order */
-  Environment.prototype.setAll = function setAll(names, vals) {
+  Environment.prototype.setAll = function setAll(env, names, vals) {
     if (names.first()) {
-      this.set(names.first(), vals.first().eval(this));
-      this.setAll(names.rest(), vals.rest());
+      this.set(names.first(), vals.first().eval(env));
+      this.setAll(env, names.rest(), vals.rest());
     }
   };
 

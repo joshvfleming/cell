@@ -1,5 +1,13 @@
 ;; cell core
 
+(def =
+  (=> (a b)
+      (eq a b)))
+
+(def zero?
+  (=> (n)
+      (= n 0)))
+
 ;; decrements the number
 (def dec
   (=> (n)

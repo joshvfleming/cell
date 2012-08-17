@@ -29,7 +29,7 @@ describe("Reader", function() {
     expect(f.count()).toBe(3);
 
     var token = f.first();
-    expect(token.data).toBe('=>');
+    expect(token.data).toBe('lambda');
 
     token = f.rest().first().first();
     expect(token.data).toBe('a');

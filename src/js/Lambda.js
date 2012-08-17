@@ -14,7 +14,7 @@ cell.Lambda = (function() {
     cell.Error.assertArgCount(args, this.argCount);
 
     var env = new cell.Environment(this.env);
-    env.setAll(this.argNames, args);
+    env.setAll(callEnv, this.argNames, args);
 
     var result = null;
     this.forms.each(function(form) {
