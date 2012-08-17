@@ -13,7 +13,12 @@ cell.Symbol = (function() {
   Symbol.prototype = new cell.Atom();
 
   Symbol.prototype.eval = function eval(env) {
-    return env.get(this.data);
+    var val = env.get(this.data);
+    if (!val) {
+      throw("Error: undefined symbol: " + this.data);
+    }
+
+    return val;
   };
 
   Symbol.prototype.eq = function eq(other) {

@@ -103,6 +103,7 @@ var cell = (function() {
     return acc;
   };
 
+  // math functions
   cell.plus = function plus(env, args) {
     return cell.reduce(env, cell.Number.prototype.plus, args);
   };
