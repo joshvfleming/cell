@@ -10,11 +10,11 @@ describe("Core", function() {
     var r = new cell.Reader("((lambda (a) (eq a 2)) 1)");
     var f = r.read()
     cell.init()
-    expect(f.eval(cell.environment)).toBe(false);
+    expect(f.eval(cell.environment)).toBe(cell.FALSE);
 
     var r = new cell.Reader("((lambda (a) (eq a 2)) 2)");
     var f = r.read()
     cell.init()
-    expect(f.eval(cell.environment)).toBe(true);
+    expect(f.eval(cell.environment)).toBe(cell.TRUE);
   });
 });

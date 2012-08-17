@@ -28,7 +28,7 @@ cell.Keyword = (function() {
   };
 
   Keyword.prototype.eq = function eq(other) {
-    return this === other;
+    return this === other ? cell.TRUE : cell.FALSE;
   };
 
   return Keyword;

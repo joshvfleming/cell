@@ -17,7 +17,7 @@ cell.Symbol = (function() {
   };
 
   Symbol.prototype.eq = function eq(other) {
-    return this.data === other.data;
+    return this.data === other.data ? cell.TRUE : cell.FALSE;
   };
 
   Symbol.prototype.toString = function toString() {

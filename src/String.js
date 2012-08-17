@@ -17,7 +17,7 @@ cell.String = (function() {
   };
 
   String.prototype.eq = function eq(other) {
-    return this.data === other.data;
+    return this.data === other.data ? cell.TRUE : cell.FALSE;
   };
 
   return String;
