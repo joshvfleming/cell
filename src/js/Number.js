@@ -53,6 +53,10 @@ cell.Number = (function() {
     return new Number(this.data % other.data);
   };
 
+  Number.prototype.toString = function() {
+    return this.data.toString();
+  };
+
   return Number;
 })();
 

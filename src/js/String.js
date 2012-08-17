@@ -20,5 +20,9 @@ cell.String = (function() {
     return this.data === other.data ? cell.TRUE : cell.FALSE;
   };
 
+  String.prototype.toString = function() {
+    return this.data;
+  };
+
   return String;
 })();

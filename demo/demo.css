@@ -1,0 +1,11 @@
+#console-output {
+    width: 100%;
+    height: 300px;
+    resize: none;
+}
+
+#console {
+    width: 100%;
+    height: 100px;
+    resize: none;
+}
