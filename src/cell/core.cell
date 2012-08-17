@@ -1,7 +1,11 @@
+;; cell core
+
+;; this is dec
 (def dec
   (=> (n)
       (- n 1)))
 
-(def incr
+;; this is incr
+(def inc
   (=> (n)
       (+ n 1)))

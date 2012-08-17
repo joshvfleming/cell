@@ -13,6 +13,11 @@ cell.Reader = (function() {
   var _aliasSet = {
     '=>': 'lambda'
   };
+
+  var _commentSet = {
+    ';': 'open',
+    '\n': 'close'
+  }
   
   var WHITESPACE_PATTERN = /[\s\,]+/;
 
@@ -102,6 +107,7 @@ cell.Reader = (function() {
   Reader.prototype.lex = function(str) {
     var tokens = [];
     var buffer = [];
+    var inComment = false;
 
     var tokenizeAndPushBuffer = function() {
       if (buffer.length) {
@@ -115,6 +121,15 @@ cell.Reader = (function() {
 
     for(var i=0, l=str.length; i<l; i++) {
       var c = str[i];
+
+      if (_commentSet[c]) {
+        inComment = (_commentSet[c] === 'open');
+        continue;
+      }
+
+      if (inComment) {
+        continue;
+      }
 
       if (c.match(WHITESPACE_PATTERN)) {
         tokenizeAndPushBuffer();
