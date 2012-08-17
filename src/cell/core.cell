@@ -17,3 +17,11 @@
 (def inc
   (=> (n)
       (+ n 1)))
+
+(def if
+  (=> (c a b)
+      (cond c a
+            true b)))
+      
+      
+

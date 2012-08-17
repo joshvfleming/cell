@@ -61,19 +61,29 @@ cell.Cell = (function() {
 
   /* Calls the callback once for each item in the list. */
   Cell.prototype.each = function each(callback) {
-    var c = 0;
+    var ret = null;
 
     if (this.first()) {
-      callback(this.first());
+      ret = callback(this.first());
+
+      // provide a way to escape the loop
+      if (ret === false) {
+        return;
+      }
     }
 
     var curr = this.rest();
     while (curr && curr.first()) {
-      callback(curr.first());
+      ret = callback(curr.first());
+
+      if (ret === false) {
+        return;
+      }
+
       curr = curr.rest();
     }
 
-    return c;
+    return;
   };
 
   Cell.prototype.toString = function() {

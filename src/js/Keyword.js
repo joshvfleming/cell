@@ -31,5 +31,9 @@ cell.Keyword = (function() {
     return this === other ? cell.TRUE : cell.FALSE;
   };
 
+  Keyword.prototype.toString = function() {
+    return this.name;
+  };
+
   return Keyword;
 })();

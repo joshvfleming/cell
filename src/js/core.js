@@ -19,6 +19,10 @@ var cell = (function() {
         return new cell.Lambda(env, args.first(), args.rest());
       }));
 
+      // special symbols
+      env.set('true', cell.TRUE);
+      env.set('false', cell.FALSE);
+
       // number builtins
       env.set('+', new cell.Function(cell.plus));
       env.set('-', new cell.Function(cell.minus));
@@ -31,13 +35,15 @@ var cell = (function() {
   cell.cond = function cond(env, args) {
     cell.Error.assertEvenArgCount(args);
 
-    for (var i=0, l=args.length; i<l; i++) {
-      var arg = args[i];
-      var pred = arg.first().eval(env);
+    var curr = args;
+    while (curr.first()) {
+      var pred = curr.first().eval(env);
 
-      if (pred === cell.TRUE) {
-        return arg.rest().eval(env);
+      if (pred.data === cell.TRUE.data) {
+        return curr.rest().first().eval(env);
       }
+
+      curr = curr.rest().rest();
     }
 
     return cell.FALSE;
