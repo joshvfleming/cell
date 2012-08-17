@@ -16,6 +16,21 @@ describe("Core", function() {
     var f = r.read()
     cell.init()
     expect(f.eval(cell.environment).data).toBe(7);
+
+    var r = new cell.Reader("(- 14 4)");
+    var f = r.read()
+    cell.init()
+    expect(f.eval(cell.environment).data).toBe(10);
+
+    var r = new cell.Reader("(* 117 2)");
+    var f = r.read()
+    cell.init()
+    expect(f.eval(cell.environment).data).toBe(234);
+
+    var r = new cell.Reader("(/ 213 75)");
+    var f = r.read()
+    cell.init()
+    expect(f.eval(cell.environment).data).toBe(2.84);
   });
 
   it("executes a simple lambda expression", function() {

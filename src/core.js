@@ -115,11 +115,11 @@ var cell = (function() {
     return cell.reduce(env, cell.Number.prototype.mult, args);
   };
 
-  cell.minus = function div(env, args) {
+  cell.div = function div(env, args) {
     return cell.reduce(env, cell.Number.prototype.div, args);
   };
 
-  cell.minus = function mod(env, args) {
+  cell.mod = function mod(env, args) {
     return cell.reduce(env, cell.Number.prototype.mod, args);
   };
 
