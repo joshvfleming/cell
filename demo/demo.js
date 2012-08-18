@@ -4,14 +4,18 @@
  */
 cell.demo = (function() {
   var demo = {};
+  var history = [];
+  var historyCursor = 0;
 
   var ENTER = 13;
+  var UP = 38;
+  var DOWN = 40;
 
   demo.init = function init() {
     var console = document.getElementById('console');
 
     cell.init();
-    cell.Loader.require('/cell/core.cell');
+    cell.Loader.require('cell/core.cell');
 
     demo.bindEvents();
     
@@ -31,14 +35,13 @@ cell.demo = (function() {
     demo.on(evalBtn, 'click', demo.evalClicked);
 
     var console = document.getElementById('console');
-    demo.on(console, 'keydown', demo.enterKeyDown);
+    demo.on(console, 'keydown', demo.consoleKeydown);
   };
 
   demo.evalClicked = function evalClicked(e) {
     e.preventDefault();
 
     var input = document.getElementById('console');
-    var console = document.getElementById('console');
     var consoleOutput = document.getElementById('console-output');
     var val = input.value;
     input.value = '';
@@ -55,14 +58,55 @@ cell.demo = (function() {
       output + "\n";
 
     consoleOutput.scrollTop = consoleOutput.clientHeight;
-    console.focus();
+    input.focus();
+
+    history.push(val);
+    historyCursor = 0;
   };
 
-  demo.enterKeyDown = function(e) {
-    if (e.keyCode === ENTER) {
-      demo.evalClicked(e);
+  demo.prevHistory = function() {
+    var input = document.getElementById('console');
+    var pos = history.length - historyCursor - 1;
+
+    if (pos <= 0) {
+      pos = 0;
+    } else {
+      historyCursor++;
     }
-  }
+
+    var curr = history[pos];
+    input.value = curr;
+  };
+
+  demo.nextHistory = function() {
+    var input = document.getElementById('console');
+    var pos = history.length - historyCursor - 1;
+
+    if (pos >= (history.length - 1)) {
+      pos = history.length - 1;
+    } else {
+      historyCursor--;
+    }
+
+    var curr = history[pos];
+    input.value = curr;
+  };
+
+  demo.consoleKeydown = function(e) {
+    switch(e.keyCode) {
+      case ENTER:
+      demo.evalClicked(e);
+      break;
+
+      case UP:
+      demo.prevHistory();
+      break;
+
+      case DOWN:
+      demo.nextHistory();
+      break;
+    }
+  };
 
   // init on page ready
   demo.on(document, 'DOMContentLoaded', function() {

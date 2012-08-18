@@ -23,5 +23,4 @@
       (cond c a
             true b)))
       
-      
 
