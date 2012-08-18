@@ -5,17 +5,27 @@
 cell.Error = (function() {
   var Error = {};
 
+  var pluralize = function(word, count) {
+    if (count === 1) {
+      return word;
+    }
+
+    return word + "s";
+  };
+
   Error.assertArgCount = function assertArgCount(args, count) {
     var argCount = args.count();
     if (argCount !== count) {
-      throw("Expected " + count + " arguments, got " + argCount);
+      throw("Error: expected " + count +
+            " " + pluralize("argument", count) +
+            ", got " + argCount);
     }
   }
 
   Error.assertEvenArgCount = function assertEvenArgCount(args) {
     var argCount = args.count();
     if (argCount % 2 !== 0) {
-      throw("Expected an even number arguments, got " + argCount);
+      throw("Error: expected an even number of arguments, got " + argCount);
     }
   }
 

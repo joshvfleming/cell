@@ -11,5 +11,9 @@ cell.Function = (function() {
     return this.fn(env, args);
   };
 
+  Function.prototype.toString = function() {
+    return "<Function>";
+  };
+
   return Function;
 })();

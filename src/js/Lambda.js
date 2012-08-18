@@ -24,6 +24,15 @@ cell.Lambda = (function() {
     return result;
   };
 
+  Lambda.prototype.toString = function() {
+    var args = [];
+    this.argNames.each(function(arg) {
+      args.push(arg);
+    });
+
+    return "<Function: " + args.join(", ") + ">"; 
+  };
+
   return Lambda;
 })();
 

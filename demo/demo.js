@@ -46,11 +46,15 @@ cell.demo = (function() {
     var val = input.value;
     input.value = '';
 
-    var reader = new cell.Reader(val);
-    var form = null;
-    var output = null;
-    while (form = reader.read()) {
-      output = form.eval(cell.environment);
+    try {
+      var reader = new cell.Reader(val);
+      var form = null;
+      var output = null;
+      while (form = reader.read()) {
+        output = form.eval(cell.environment);
+      }
+    } catch (e) {
+      output = e;
     }
 
     consoleOutput.value = consoleOutput.value + "\n" +
@@ -65,6 +69,10 @@ cell.demo = (function() {
   };
 
   demo.prevHistory = function() {
+    if (!history.length) {
+      return;
+    }
+
     var input = document.getElementById('console');
     var pos = history.length - historyCursor - 1;
 
@@ -73,12 +81,16 @@ cell.demo = (function() {
     } else {
       historyCursor++;
     }
-
+    
     var curr = history[pos];
     input.value = curr;
   };
 
   demo.nextHistory = function() {
+    if (!history.length) {
+      return;
+    }
+
     var input = document.getElementById('console');
     var pos = history.length - historyCursor - 1;
 
