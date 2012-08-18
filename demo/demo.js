@@ -16,6 +16,8 @@ cell.demo = (function() {
 
     cell.init();
     cell.Loader.require('cell/core.cell');
+    cell.Loader.require('cell/examples/fibonacci.cell');
+    cell.Loader.require('cell/examples/hanoi.cell');
 
     demo.bindEvents();
     

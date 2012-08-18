@@ -1,4 +1,5 @@
 * Handle strings properly in reader (don't break on whitespace)
+* Hanele symbols with numbers properly (currently detected as numbers)
 * Passing empty lists as parameters
 * Decide on how to handle nil/false/empty list
 * Metacircular eval
