@@ -31,7 +31,7 @@ cell.Symbol = (function() {
 
   // special symbols
   cell.TRUE = new Symbol("true");
-  cell.FALSE = new Symbol("false");
+  cell.FALSE = new cell.Cell();
 
   return Symbol;
 })();

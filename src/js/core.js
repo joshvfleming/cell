@@ -13,6 +13,8 @@ var cell = (function() {
       env.set('cons', new cell.Function(cell.cons));
       env.set('atom', new cell.Function(cell.atom));
       env.set('def', new cell.Function(cell.def));
+      env.set('list', new cell.Function(cell.list));
+      env.set('println', new cell.Function(cell.println));
 
       // lambda
       env.set('lambda', new cell.Function(function lambda(env, args) {
@@ -21,7 +23,7 @@ var cell = (function() {
 
       // special symbols
       env.set('true', cell.TRUE);
-      env.set('false', cell.FALSE);
+      env.set('nil', cell.FALSE);
 
       // number builtins
       env.set('+', new cell.Function(cell.plus));
@@ -32,6 +34,10 @@ var cell = (function() {
     }
   };
 
+  cell.isTruthy = function(pred) {
+    return (cell.FALSE.eq(pred).empty && cell.FALSE.eq(pred).empty()); 
+  };
+
   cell.cond = function cond(env, args) {
     cell.Error.assertEvenArgCount(args);
 
@@ -39,7 +45,7 @@ var cell = (function() {
     while (curr.first()) {
       var pred = curr.first().eval(env);
 
-      if (pred.data === cell.TRUE.data) {
+      if (cell.isTruthy(pred)) {
         return curr.rest().first().eval(env);
       }
 
@@ -72,7 +78,7 @@ var cell = (function() {
   cell.cons = function cons(env, args) {
     cell.Error.assertArgCount(args, 2);
     return cell.Cell.cons(args.first().eval(env),
-                          args.first().rest().first().eval(env));
+                          args.rest().first().eval(env));
   };
 
   cell.atom = function atom(env, args) {
@@ -98,6 +104,11 @@ var cell = (function() {
 
     return val;
   };
+
+  cell.list = function list(env, args) {
+    cell.Error.assertArgCount(args, 1);
+    return new cell.Cell(args.first().eval(env));
+  }
 
   cell.reduce = function reduce(env, fn, args) {
     var acc = args.first().eval(env);
@@ -128,6 +139,11 @@ var cell = (function() {
 
   cell.mod = function mod(env, args) {
     return cell.reduce(env, cell.Number.prototype.mod, args);
+  };
+
+  cell.println = function println(env, args) {
+    console.log(args.first().eval(env).toString());
+    return cell.FALSE;
   };
 
   return cell;

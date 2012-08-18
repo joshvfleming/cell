@@ -1,9 +1,31 @@
 ;; cell core
 
+;; logical not
+(def not
+  (=> (a)
+      (cond a nil
+            :else true)))
+
+;; logical and
+(def and
+  (=> (a b)
+      (cond a (cond b true
+                    :else nil)
+            :else nil)))
+
+;; logical or
+(def or
+  (=> (a b)
+      (cond a true
+            b true
+            :else nil)))
+
+;; eq convenience form
 (def =
   (=> (a b)
       (eq a b)))
 
+;; tests for zero value
 (def zero?
   (=> (n)
       (= n 0)))
@@ -18,9 +40,24 @@
   (=> (n)
       (+ n 1)))
 
+;; if form
+;; TODO this currently evals all arguments. Need to change this into a
+;; macro when they're available
 (def if
   (=> (c a b)
       (cond c a
             true b)))
-      
 
+;; concatenates two lists together
+(def concat
+  (=> (a b)
+      (cond (rest a) (cons (first a) (concat (rest a) b))
+            :else (cons (first a) b))))
+
+(def reverse
+  (=> (a)
+      (cond (rest a)
+            (concat (reverse (rest a)) (list (first a)))
+
+            :else
+            a)))

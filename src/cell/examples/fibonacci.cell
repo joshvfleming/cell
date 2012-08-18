@@ -1,0 +1,10 @@
+;; nth number in the fibonacci series
+
+(def fib
+  (=> (n)
+      (cond (= n 0) 1
+            (= n 1) 1
+            
+            :else
+            (+ (fib (- n 2))
+               (fib (- n 1))))))

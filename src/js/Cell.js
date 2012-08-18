@@ -86,7 +86,37 @@ cell.Cell = (function() {
     return;
   };
 
+  Cell.prototype.empty = function() {
+    return !this.left && !this.right;
+  };
+
+  Cell.prototype.eq = function(other) {
+    var equal = cell.FALSE;
+
+    // only test equality with other cells
+    if (!other.first) {
+      return cell.FALSE;
+    }
+
+    // case of empty list
+    if (this.empty()) {
+      return other.empty() ? cell.TRUE : cell.FALSE;
+    }
+
+    equal = this.first().eq(other.first());
+    var cmp = equal.eq(cell.TRUE);
+    if (!cmp.empty || !cmp.empty()) {
+      equal = this.rest().eq(other.rest());
+    }
+
+    return equal;
+  };
+
   Cell.prototype.toString = function() {
+    if (this.empty()) {
+      return "nil";
+    }
+
     var items = [];
  
     this.each(function(item) {
