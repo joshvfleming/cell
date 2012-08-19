@@ -1,4 +1,4 @@
-;; towers of hanoi
+;; Tower of Hanoi
 
 (def hanoi*
   (=> (n src aux dest steps)
