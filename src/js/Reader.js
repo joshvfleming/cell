@@ -17,8 +17,12 @@ cell.Reader = (function() {
   var _commentSet = {
     ';': 'open',
     '\n': 'close'
-  }
-  
+  };
+
+  var _macroSet = {
+    "'": 'quote'
+  };
+
   var WHITESPACE_PATTERN = /[\s\,]+/;
 
   var Reader = function Reader(str) {
@@ -63,7 +67,11 @@ cell.Reader = (function() {
 
         token = this.getToken();
         while (token) {
-          if (token.type !== 'terminal') {
+          if (token.type === 'macro') {
+            var form = new cell.Cell(new cell.Symbol(token.value),
+                                     new cell.Cell(this.read())); 
+            expr.push(form);
+          } else if (token.type !== 'terminal') {
             expr.push(token.value);
           } else if (isOpenTerminal(token)) {
             this.movePrev();
@@ -144,6 +152,12 @@ cell.Reader = (function() {
           tokenizeAndPushBuffer('string');
         }
         inString = !inString;
+        continue;
+      }
+
+      var macro = _macroSet[c];
+      if (macro) {
+        tokens.push({type: 'macro', value: macro});
         continue;
       }
 

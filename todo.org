@@ -1,8 +1,6 @@
 * Passing empty lists as parameters
 * Decide on how to handle nil/false/empty list
 * Metacircular eval
-* Macro support
-* Reader macro (') for QUOTE form
 * Stack traces?
 * Multiple arity
 * Namespacing?

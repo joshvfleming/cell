@@ -102,4 +102,25 @@ describe("Reader", function() {
     token = f.rest().rest().first();
     expect(token.data).toBe('this is a test');
   });
+
+  it("expands reader macros into forms", function() {
+    var r = new cell.Reader("(def test '(1 2 3 4))");
+    var f = r.read();
+    console.log(f);
+
+    expect(f.count()).toBe(3);
+
+    var token = f.first();
+    expect(token.data).toBe('def');
+
+    token = f.rest().first();
+    expect(token.data).toBe('test');
+
+    token = f.rest().rest().first().first();
+    expect(token.data).toBe('quote');
+
+    token = f.rest().rest().first().rest().first().first();
+    expect(token.data).toBe(1);
+  });
+
 })
