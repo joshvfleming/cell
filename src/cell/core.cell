@@ -97,6 +97,17 @@
   (=> (a)
       (first (rest (rest (rest (first a)))))))
 
+(def map
+  (=> (f a)
+      (cond a (cons (f (first a))
+                    (map f (rest a)))
+            :else nil)))
+
+(def reduce
+  (=> (f acc a)
+      (cond a (reduce f (f acc (first a)) (rest a))
+            :else acc)))
+
 (def eval
   (=> (e)
       nil))
