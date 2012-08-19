@@ -6,7 +6,7 @@ describe("Reader", function() {
     env = cell.environment;
   });
 
-  it("should produce a valid form from simple input strings", function() {
+  it("produces a valid form from simple input strings", function() {
     var r = new cell.Reader("(eq 1 2)");
     var f = r.read();
 
@@ -27,7 +27,7 @@ describe("Reader", function() {
     expect(f.first().data).toBe(0);
   });
 
-  it("should handle nested expressions", function() {
+  it("handles nested expressions", function() {
     var r = new cell.Reader("(=> (a b) (+ a b))");
     var f = r.read();
 
@@ -52,7 +52,7 @@ describe("Reader", function() {
     expect(token.data).toBe('b');
   });
 
-  it("should detect unbalanced parens", function() {
+  it("detects unbalanced parens", function() {
     var r = new cell.Reader("(a b (c d))");
 
     var read = function() {
@@ -69,5 +69,21 @@ describe("Reader", function() {
 
     r = new cell.Reader("(a b");
     expect(read).toThrow();
-  })
+  });
+
+  it("handles string values", function() {
+    var r = new cell.Reader("(def test \"this is a test\")");
+    var f = r.read();
+
+    expect(f.count()).toBe(3);
+
+    var token = f.first();
+    expect(token.data).toBe('def');
+
+    token = f.rest().first();
+    expect(token.data).toBe('test');
+
+    token = f.rest().rest().first();
+    expect(token.data).toBe('this is a test');
+  });
 })

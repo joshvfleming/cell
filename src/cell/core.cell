@@ -61,3 +61,42 @@
 
             :else
             a)))
+
+(def count*
+  (=> (a n)
+      (cond (rest a)
+            (count* (rest a) (inc n))
+
+            :else n)))
+
+(def count
+  (=> (a)
+      (count* a 1)))
+
+(def ffirst
+  (=> (a)
+      (first (first a))))
+
+(def frest
+  (=> (a)
+      (first (rest a))))
+
+(def frrest
+  (=> (a)
+      (first (rest (rest a)))))
+
+(def frfirst
+  (=> (a)
+      (first (rest (first a)))))
+
+(def frrfirst
+  (=> (a)
+      (first (rest (rest (first a))))))
+
+(def frrrfirst
+  (=> (a)
+      (first (rest (rest (rest (first a)))))))
+
+(def eval
+  (=> (e)
+      nil))

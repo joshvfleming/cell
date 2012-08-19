@@ -7,7 +7,7 @@ cell.String = (function() {
     this.data = data || null;
   };
 
-  String.PATTERN = /".+"/;
+  String.PATTERN = /"/;
 
   // inherit from Atom
   String.prototype = new cell.Atom();

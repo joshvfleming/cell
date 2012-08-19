@@ -142,8 +142,9 @@ var cell = (function() {
   };
 
   cell.println = function println(env, args) {
-    console.log(args.first().eval(env).toString());
-    return cell.FALSE;
+    var val = args.first().eval(env).toString();
+    console.log(val);
+    return val;
   };
 
   return cell;

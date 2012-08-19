@@ -80,7 +80,7 @@ cell.Reader = (function() {
     }
   };
 
-  var tokenFromBuffer = function(buffer) {
+  var tokenFromBuffer = function(buffer, type) {
     var word = buffer.join('');
 
     word = _aliasSet[word] || word;
@@ -89,7 +89,7 @@ cell.Reader = (function() {
       return {type: 'number', value: new cell.Number(word)};
     }
 
-    if (word.match(cell.String.PATTERN)) {
+    if (type === 'string') {
       return {type: 'string', value: new cell.String(word)};
     }
 
@@ -108,10 +108,11 @@ cell.Reader = (function() {
     var tokens = [];
     var buffer = [];
     var inComment = false;
+    var inString = false;
 
-    var tokenizeAndPushBuffer = function() {
+    var tokenizeAndPushBuffer = function(type) {
       if (buffer.length) {
-        var token = tokenFromBuffer(buffer);
+        var token = tokenFromBuffer(buffer, type);
         if (token) {
           tokens.push(token);
         }
@@ -132,7 +133,17 @@ cell.Reader = (function() {
       }
 
       if (c.match(WHITESPACE_PATTERN)) {
-        tokenizeAndPushBuffer();
+        if (!inString) {
+          tokenizeAndPushBuffer();
+          continue;
+        }
+      }
+
+      if (c.match(cell.String.PATTERN)) {
+        if (inString) {
+          tokenizeAndPushBuffer('string');
+        }
+        inString = !inString;
         continue;
       }
 
