@@ -7,6 +7,8 @@ This implementation was influenced heavily by:
   * [Lithp, a Lisp implementation in Python - Michael Fogus](http://fogus.me/fun/lithp/)
   * [Clojure, a modern Lisp dialect for the JVM - Rich Hickey](http://clojure.org/)
 
+Live REPL available here: http://joshvfleming.github.com/cell/
+
 License
 -------
 
