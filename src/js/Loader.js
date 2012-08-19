@@ -5,6 +5,8 @@
 cell.Loader = (function() {
   var Loader = function Loader(){};
 
+  // Sends a GET request to the given path, returning the results to
+  // the "success" callback
   Loader.get = function load(path, opts) {
     var xhr = new XMLHttpRequest();
 
@@ -31,6 +33,8 @@ cell.Loader = (function() {
     xhr.send();
   };
 
+  // Requests the cell source file at the given path, and evals its
+  // contents in the current global Environment
   Loader.require = function require(path) {
     Loader.get(path, {
       success: function(data) {

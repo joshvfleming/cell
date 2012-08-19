@@ -5,6 +5,7 @@
 cell.Error = (function() {
   var Error = {};
 
+  // Performs basic pluralization
   var pluralize = function(word, count) {
     if (count === 1) {
       return word;
@@ -13,6 +14,7 @@ cell.Error = (function() {
     return word + "s";
   };
 
+  // Assert that args match to expected count
   Error.assertArgCount = function assertArgCount(args, count) {
     var argCount = args.count();
     if (argCount !== count) {
@@ -22,6 +24,7 @@ cell.Error = (function() {
     }
   }
 
+  // Assert that args have an even arg count
   Error.assertEvenArgCount = function assertEvenArgCount(args) {
     var argCount = args.count();
     if (argCount % 2 !== 0) {

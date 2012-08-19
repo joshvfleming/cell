@@ -31,14 +31,17 @@ cell.Reader = (function() {
     this.tokens = this.lex(str);
   };
 
+  // Move to the next token
   Reader.prototype.moveNext = function() {
     this.index++;
   };
 
+  // Return to the previous token
   Reader.prototype.movePrev = function() {
     this.index--;
   };
 
+  // Return the current token, and move to the next one
   Reader.prototype.getToken = function() {
     var token = null;
 
@@ -50,14 +53,18 @@ cell.Reader = (function() {
     return token;
   };
 
+  // Determines whether token is an opening terminal
   var isOpenTerminal = function(token) {
     return token.type === 'terminal' && token.value === 'open';
   };
 
+  // Determines whether token is an closing terminal
   var isCloseTerminal = function(token) {
     return token.type === 'terminal' && token.value === 'close';
   };
 
+  // Main reader method. Walks the tokens, resolving forms recursively
+  // and combining the result into nested Cell lists
   Reader.prototype.read = function() {
     var token = this.getToken();
     var expr = [];
@@ -68,6 +75,8 @@ cell.Reader = (function() {
         token = this.getToken();
         while (token) {
           if (token.type === 'macro') {
+            // expand the macro into an eval'able form
+            // e.g. "'(1 2 3)" => "(quote (1 2 3))"
             var form = new cell.Cell(new cell.Symbol(token.value),
                                      new cell.Cell(this.read())); 
             expr.push(form);
@@ -88,6 +97,7 @@ cell.Reader = (function() {
     }
   };
 
+  // Returns a token from the buffer
   var tokenFromBuffer = function(buffer, type) {
     var word = buffer.join('');
 
@@ -112,6 +122,8 @@ cell.Reader = (function() {
     return null;
   };
 
+  // Scans the given string, and returns an array of tokens that the
+  // reader can understand
   Reader.prototype.lex = function(str) {
     var tokens = [];
     var buffer = [];
@@ -131,15 +143,19 @@ cell.Reader = (function() {
     for(var i=0, l=str.length; i<l; i++) {
       var c = str[i];
 
+      // Comment reached
       if (_commentSet[c]) {
         inComment = (_commentSet[c] === 'open');
         continue;
       }
 
+      // Ignore contents if we're in a comment
       if (inComment) {
         continue;
       }
 
+      // Whitespace. We can now treat the buffer as a potential token,
+      // if we're not in a string
       if (c.match(WHITESPACE_PATTERN)) {
         if (!inString) {
           tokenizeAndPushBuffer();
@@ -147,6 +163,7 @@ cell.Reader = (function() {
         }
       }
 
+      // String boundary reached
       if (c.match(cell.String.PATTERN)) {
         if (inString) {
           tokenizeAndPushBuffer('string');
@@ -155,12 +172,14 @@ cell.Reader = (function() {
         continue;
       }
 
+      // Beginnings of a reader macro?
       var macro = _macroSet[c];
       if (macro) {
         tokens.push({type: 'macro', value: macro});
         continue;
       }
 
+      // Terminal
       var terminal = _terminalSet[c];
       if (terminal) {
         tokenizeAndPushBuffer();

@@ -9,9 +9,11 @@ cell.Symbol = (function() {
 
   Symbol.PATTERN = /.+/;
 
-  // inherit from Atom
+  // Inherit from Atom
   Symbol.prototype = new cell.Atom();
 
+  // Symbol eval. Returns the result of looking up the symbol in the
+  // given Environment
   Symbol.prototype.eval = function eval(env) {
     var val = env.get(this.data);
     if (!val) {
@@ -21,10 +23,12 @@ cell.Symbol = (function() {
     return val;
   };
 
+  // Tests for equality between Symbols
   Symbol.prototype.eq = function eq(other) {
     return this.data === other.data ? cell.TRUE : cell.FALSE;
   };
 
+  // Returns the string representations for a Symbol
   Symbol.prototype.toString = function toString() {
     return this.data;
   };

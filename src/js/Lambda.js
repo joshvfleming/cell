@@ -10,6 +10,9 @@ cell.Lambda = (function() {
     this.forms = forms;
   };
 
+  // Lambda eval. Returns the result of eval'ing the Lambda's
+  // forms. Environment inherits from the point where the Lambda is
+  // defined, which means that we have lexical scope.
   Lambda.prototype.eval = function eval(callEnv, args) {
     cell.Error.assertArgCount(args, this.argCount);
 
@@ -24,6 +27,7 @@ cell.Lambda = (function() {
     return result;
   };
 
+  // Returns the string representation for a Lambda
   Lambda.prototype.toString = function() {
     var args = [];
     this.argNames.each(function(arg) {

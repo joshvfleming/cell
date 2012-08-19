@@ -8,11 +8,13 @@ cell.Cell = (function() {
     this.right = right || null;
   };
 
+  // Constructs a new Cell from the two items
   Cell.cons = function(left, right) {
     var cell = new Cell(left, right);
     return cell;
   };
 
+  // Constructs a series of linked Cells from the given array of items
   Cell.fromArray = function(arr) {
     var arrDup = arr.slice();
     var curr = arrDup.shift();
@@ -24,31 +26,31 @@ cell.Cell = (function() {
     return null;
   };
 
-  /* Returns the head, or first element of the list. */
+  // Returns the head, or first element of the list.
   Cell.prototype.first = function first() {
     return this.left;
   };
 
-  /* Returns the rest of the list after the first element. None of the
-   * elements are evaluated. */
+  // Returns the rest of the list after the first element. None of the
+  // elements are evaluated.
   Cell.prototype.rest = function rest() {
     return this.right || new Cell();
   };
 
-  /* Constructs a new list by adding the given value onto the current
-   * list. */
+  // Constructs a new list by adding the given value onto the current
+  // list.
   Cell.prototype.cons = function cons(val) {
     return Cell.cons(val, this);
   };
 
-  /* Cells are eval'd as function calls. */
+  // Cells are eval'd as function calls.
   Cell.prototype.eval = function eval(env) {
     var fnSym = this.first().eval(env);
 
     return fnSym.eval(env, this.rest());
   };
 
-  /* Returns a count of list items. */
+  // Returns a count of list items.
   Cell.prototype.count = function count() {
     var c = 0;
 
@@ -59,14 +61,14 @@ cell.Cell = (function() {
     return c;
   };
 
-  /* Calls the callback once for each item in the list. */
+  // Calls the callback once for each item in the list.
   Cell.prototype.each = function each(callback) {
     var ret = null;
 
     if (this.first()) {
       ret = callback(this.first());
 
-      // provide a way to escape the loop
+      // Provide a way to escape the loop
       if (ret === false) {
         return;
       }
@@ -86,19 +88,21 @@ cell.Cell = (function() {
     return;
   };
 
+  // Determines whether the list is empty
   Cell.prototype.empty = function() {
     return !this.left && !this.right;
   };
 
+  // Tests for equality between Cells
   Cell.prototype.eq = function(other) {
     var equal = cell.FALSE;
 
-    // only test equality with other cells
+    // Only test equality with other cells
     if (!other.first) {
       return cell.FALSE;
     }
 
-    // case of empty list
+    // Case of empty list
     if (this.empty()) {
       return other.empty() ? cell.TRUE : cell.FALSE;
     }
@@ -112,6 +116,7 @@ cell.Cell = (function() {
     return equal;
   };
 
+  // Return the string representations for a Cell
   Cell.prototype.toString = function() {
     if (this.empty()) {
       return "nil";

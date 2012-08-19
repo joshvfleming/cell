@@ -4,7 +4,7 @@ var cell = (function() {
       var env = new cell.Environment();
       cell.environment = env;
       
-      // set initial bindings
+      // Set initial bindings
       env.set('cond', new cell.Function(cell.cond));
       env.set('eq', new cell.Function(cell.eq));
       env.set('quote', new cell.Function(cell.quote));
@@ -13,19 +13,18 @@ var cell = (function() {
       env.set('cons', new cell.Function(cell.cons));
       env.set('atom', new cell.Function(cell.atom));
       env.set('def', new cell.Function(cell.def));
-      env.set('list', new cell.Function(cell.list));
       env.set('println', new cell.Function(cell.println));
 
-      // lambda
+      // Lambda
       env.set('lambda', new cell.Function(function lambda(env, args) {
         return new cell.Lambda(env, args.first(), args.rest());
       }));
 
-      // special symbols
+      // Special symbols
       env.set('true', cell.TRUE);
       env.set('nil', cell.FALSE);
 
-      // number builtins
+      // Number builtins
       env.set('+', new cell.Function(cell.plus));
       env.set('-', new cell.Function(cell.minus));
       env.set('*', new cell.Function(cell.mult));
@@ -34,10 +33,16 @@ var cell = (function() {
     }
   };
 
+  // Built-in functions and helpers
+  // These functions wrap the core datastructures' functions and
+  // control how forms are unrolled and eval'd
+
+  // Determines 'truthiness'
   cell.isTruthy = function(pred) {
     return (cell.FALSE.eq(pred).empty && cell.FALSE.eq(pred).empty()); 
   };
 
+  // cond
   cell.cond = function cond(env, args) {
     cell.Error.assertEvenArgCount(args);
 
@@ -55,32 +60,38 @@ var cell = (function() {
     return cell.FALSE;
   };
 
+  // eq
   cell.eq = function eq(env, args) {
     cell.Error.assertArgCount(args, 2);
     return args.first().eval(env).eq(args.rest().first().eval(env));
   };
 
+  // quote
   cell.quote = function quote(env, args) {
     cell.Error.assertArgCount(args, 1);
     return args.first();
   };
 
+  // first
   cell.first = function first(env, args) {
     cell.Error.assertArgCount(args, 1);
     return args.first().eval(env).first().eval(env);
   };
 
+  // rest
   cell.rest = function rest(env, args) {
     cell.Error.assertArgCount(args, 1);
     return args.first().eval(env).rest();
   };
 
+  // cons
   cell.cons = function cons(env, args) {
     cell.Error.assertArgCount(args, 2);
     return cell.Cell.cons(args.first().eval(env),
                           args.rest().first().eval(env));
   };
 
+  // atom
   cell.atom = function atom(env, args) {
     cell.Error.assertArgCount(args, 1);
 
@@ -95,6 +106,7 @@ var cell = (function() {
     return cell.FALSE;
   };
 
+  // def
   cell.def = function def(env, args) {
     cell.Error.assertArgCount(args, 2);
 
@@ -105,11 +117,14 @@ var cell = (function() {
     return val;
   };
 
-  cell.list = function list(env, args) {
-    cell.Error.assertArgCount(args, 1);
-    return new cell.Cell(args.first().eval(env));
-  }
+  // println
+  cell.println = function println(env, args) {
+    var val = args.first().eval(env).toString();
+    console.log(val);
+    return val;
+  };
 
+  // reduce helper function. This is not exported.
   cell.reduce = function reduce(env, fn, args) {
     var acc = args.first().eval(env);
 
@@ -120,7 +135,7 @@ var cell = (function() {
     return acc;
   };
 
-  // math functions
+  // Math functions
   cell.plus = function plus(env, args) {
     return cell.reduce(env, cell.Number.prototype.plus, args);
   };
@@ -139,12 +154,6 @@ var cell = (function() {
 
   cell.mod = function mod(env, args) {
     return cell.reduce(env, cell.Number.prototype.mod, args);
-  };
-
-  cell.println = function println(env, args) {
-    var val = args.first().eval(env).toString();
-    console.log(val);
-    return val;
   };
 
   return cell;
