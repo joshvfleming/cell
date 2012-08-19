@@ -108,6 +108,21 @@
       (cond a (reduce f (f acc (first a)) (rest a))
             :else acc)))
 
+(def take
+  (=> (n a)
+      (cond (zero? n) nil
+            :else (cons (first a) (take (dec n) (rest a))))))
+
+(def drop
+  (=> (n a)
+      (cond (zero? n) a
+            :else (drop (dec n) (rest a)))))
+
+(def partition
+  (=> (n a)
+      (cond a (cons (take n a) (partition n (drop n a)))
+            :else nil)))
+
 (def eval
   (=> (e)
       nil))
