@@ -21,7 +21,7 @@ cell.Number = (function() {
     this.data = data;
   };
 
-  Number.PATTERN = /\-?\d+(\.\d+)?(e\-?\d+)?/;
+  Number.PATTERN = /^\-?\d+(\.\d+)?(e\-?\d+)?$/;
   Number.FLOAT_PATTERN = /\./;
   Number.DEFAULT_RADIX = 10;
 

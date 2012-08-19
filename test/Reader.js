@@ -27,6 +27,22 @@ describe("Reader", function() {
     expect(f.first().data).toBe(0);
   });
 
+  it("correctly reads keyword names with numbers", function() {
+    var r = new cell.Reader("(def test :test2)");
+    var f = r.read();
+
+    expect(f.count()).toBe(3);
+
+    var token = f.first();
+    expect(token.data).toBe('def');
+
+    token = f.rest().first();
+    expect(token.data).toBe('test');
+
+    token = f.rest().rest().first();
+    expect(token.name).toBe(':test2');
+  });
+
   it("handles nested expressions", function() {
     var r = new cell.Reader("(=> (a b) (+ a b))");
     var f = r.read();
