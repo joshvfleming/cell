@@ -2,6 +2,11 @@ body {
     padding-left: 30px;
 }
 
+.code {
+    font-family: consolas, courier new, monospace;
+    font-size: 10pt;
+}
+
 #repl {
     width: 700px;
     float: left;
@@ -20,13 +25,17 @@ body {
 
 #console-output {
     width: 100%;
-    height: 400px;
+    height: 450px;
 }
 
 #console {
     width: 100%;
     height: 100px;
     resize: none;
+}
+
+#copy {
+    margin-top: 30px;
 }
 
 h3 {
@@ -36,4 +45,5 @@ h3 {
 pre {
     margin: 0;
     padding: 0;
+    text-indent: 0;
 }

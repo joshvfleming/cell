@@ -26,35 +26,47 @@
   </head>
 
   <body>
-    <h1>'(cell) REPL</h1>
+    <h1>'(:cell) REPL</h1>
 
     <div id="repl">
-      <textarea id="console-output" disabled="true"></textarea>
-      <textarea id="console"></textarea>
+      <textarea id="console-output" class="code" disabled="true"></textarea>
+      <textarea id="console" class="code"></textarea>
       <input type="submit" value="Eval" id="eval-btn"/>
     </div>
 
     <div id="instructions">
       <h3>Welcome to Cell</h3>
 
-      Try it:<br/>
+      <p>Try it:</p>
 
       Simple math
-      <pre>
-      (+ 2 3)
-      (+ 5 (- 11 7) 22)
+      <pre class="code">
+(+ 2 3)
+(+ 5 (- 11 7) 22)
+(inc 1)
       </pre>  
 
       Define a function
-      <pre>
-      (def myfunc
-        (=> (a b)
-            (+ a b)))
+      <pre class="code">
+(def myfunc
+  (=> (a b)
+      (+ a b)))
       </pre>
 
       Call the function with arguments
-      <pre>
-      (myfunc 2 3)
+      <pre class="code">
+(myfunc 2 3)
+      </pre>
+
+      Lists
+      <pre class="code">
+(take 3 '(1 2 3 4))
+      </pre>
+
+      Functional list manipulation
+      <pre class="code">
+(reduce + 0
+  (map inc '(1 2 3 4)))
       </pre>
 
       <h3>Example programs</h3>
@@ -62,8 +74,24 @@
         <li><a href="#" id="fib-btn">Fibonacci</a></li>
         <li><a href="#" id="hanoi-btn">Towers of Hanoi</a></li>
       </ul>
+
+      <h3>Get the source</h3>
+      <a href="https://github.com/joshvfleming/cell">Github</a>
     </div>
 
     <div style="clear: both"></div>
+
+    <div id="copy">
+    <h3>What is it?</h3>
+    <p>Cell is a toy language based on the original Lisp specification. I wrote this interpreter solely for the purpose of learning how Lisp works, so please do not attempt to use it for any real project. As always, any comments or criticisms are welcome.</p>
+    <p>This implementation was influenced heavily by:</p>
+    <ul>
+      <li><a href="http://www-formal.stanford.edu/jmc/recursive.html">Recursive Functions of Symbolic Expressions, and Their Computation by Machine - John McCarthy, 1960</a></li>
+      <li><a href="http://fogus.me/fun/lithp/">Lithp, a Lisp implementation in Python - Michael Fogus</a></li>
+      <li><a href="http://clojure.org/">Clojure, a modern Lisp dialect for the JVM - Rich Hickey</a></li>
+    </ul>
+    </div>
+
+    &copy 2012 Josh Fleming
   </body>
 </html>
