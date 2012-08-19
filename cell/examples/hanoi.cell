@@ -1,0 +1,16 @@
+;; towers of hanoi
+
+(def hanoi*
+  (=> (n src aux dest steps)
+      (cond (= n 1) (cons dest (cons n steps))
+
+            :else
+            (hanoi* (dec n) aux src dest
+                    (cons dest (cons n
+                                     (hanoi* (dec n) src dest aux steps)))))))
+
+(def hanoi
+  (=> (n src aux dest)
+      (partition 2 (reverse (hanoi* n src aux dest nil)))))
+
+(hanoi 3 :peg1 :peg2 :peg3)
