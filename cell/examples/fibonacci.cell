@@ -1,4 +1,4 @@
-;; nth number in the fibonacci series
+;; nth number in the Fibonacci series
 
 (def fib
   (=> (n)
