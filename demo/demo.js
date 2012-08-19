@@ -16,8 +16,6 @@ cell.demo = (function() {
 
     cell.init();
     cell.Loader.require('cell/core.cell');
-    cell.Loader.require('cell/examples/fibonacci.cell');
-    cell.Loader.require('cell/examples/hanoi.cell');
 
     demo.bindEvents();
     
@@ -38,18 +36,19 @@ cell.demo = (function() {
 
     var console = document.getElementById('console');
     demo.on(console, 'keydown', demo.consoleKeydown);
+
+    var fib = document.getElementById('fib-btn');
+    demo.on(fib, 'click', demo.fibClicked);
+
+    var hanoi = document.getElementById('hanoi-btn');
+    demo.on(hanoi, 'click', demo.hanoiClicked);
   };
 
-  demo.evalClicked = function evalClicked(e) {
-    e.preventDefault();
-
-    var input = document.getElementById('console');
+  demo.eval = function(data) {
     var consoleOutput = document.getElementById('console-output');
-    var val = input.value;
-    input.value = '';
 
     try {
-      var reader = new cell.Reader(val);
+      var reader = new cell.Reader(data);
       var form = null;
       var output = null;
       while (form = reader.read()) {
@@ -60,14 +59,25 @@ cell.demo = (function() {
     }
 
     consoleOutput.value = consoleOutput.value + "\n" +
-      val + "\n" +
+      data + "\n" +
       output + "\n";
 
-    consoleOutput.scrollTop = consoleOutput.clientHeight;
-    input.focus();
+    consoleOutput.scrollTop = consoleOutput.scrollHeight;
+  };
+
+  demo.evalClicked = function evalClicked(e) {
+    e.preventDefault();
+
+    var input = document.getElementById('console');
+    var val = input.value;
+    input.value = '';
+
+    demo.eval(val);
 
     history.push(val);
     historyCursor = 0;
+
+    input.focus();
   };
 
   demo.prevHistory = function() {
@@ -120,6 +130,24 @@ cell.demo = (function() {
       demo.nextHistory();
       break;
     }
+  };
+
+  demo.fibClicked = function(e) {
+    e.preventDefault();
+
+    cell.Loader.get('cell/examples/fibonacci.cell', {
+      success: function(data) {
+        demo.eval(data);
+      }});
+  };
+
+  demo.hanoiClicked = function(e) {
+    e.preventDefault();
+
+    cell.Loader.get('cell/examples/hanoi.cell', {
+      success: function(data) {
+        demo.eval(data);
+      }});
   };
 
   // init on page ready

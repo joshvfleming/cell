@@ -4,6 +4,7 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <title>Cell</title>
 
+    <link rel="stylesheet" type="text/css" href="reset.css">
     <link rel="stylesheet" type="text/css" href="demo.css">
 
     <script type="text/javascript" src="js/core.js"></script>
@@ -25,11 +26,44 @@
   </head>
 
   <body>
-    <h1>Cell REPL</h1>
+    <h1>'(cell) REPL</h1>
 
-    <textarea id="console-output" disabled="true"></textarea>
-    <textarea id="console"></textarea>
-    <input type="submit" value="Eval" id="eval-btn"/>
+    <div id="repl">
+      <textarea id="console-output" disabled="true"></textarea>
+      <textarea id="console"></textarea>
+      <input type="submit" value="Eval" id="eval-btn"/>
+    </div>
 
+    <div id="instructions">
+      <h3>Welcome to Cell</h3>
+
+      Try it:<br/>
+
+      Simple math
+      <pre>
+      (+ 2 3)
+      (+ 5 (- 11 7) 22)
+      </pre>  
+
+      Define a function
+      <pre>
+      (def myfunc
+        (=> (a b)
+            (+ a b)))
+      </pre>
+
+      Call the function with arguments
+      <pre>
+      (myfunc 2 3)
+      </pre>
+
+      <h3>Example programs</h3>
+      <ul>
+        <li><a href="#" id="fib-btn">Fibonacci</a></li>
+        <li><a href="#" id="hanoi-btn">Towers of Hanoi</a></li>
+      </ul>
+    </div>
+
+    <div style="clear: both"></div>
   </body>
 </html>
