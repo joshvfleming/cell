@@ -10,6 +10,13 @@ cell.Loader = (function() {
   Loader.get = function load(path, opts) {
     var xhr = new XMLHttpRequest();
 
+    // add cachebuster
+    var sep = '?';
+    if (path.match(/\?/)) {
+      sep = '&';
+    }
+    path = path + sep + 'nc=' + (+new Date());
+
     var recvFile = function() {
       if (xhr.readyState !== 4) {
         return;
