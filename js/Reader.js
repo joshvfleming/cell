@@ -71,7 +71,6 @@ cell.Reader = (function() {
     var token = this.getToken();
     if (token) {
       if (isOpenTerminal(token)) {
-
         token = this.getToken();
         while (token) {
           if (token.type === 'macro') {
