@@ -25,6 +25,14 @@ describe("Reader", function() {
     f = r.read();
 
     expect(f.first().data).toBe(0);
+
+    r = new cell.Reader("(=> () 2)");
+    f = r.read();
+
+    expect(f.first().data).toBe('lambda');
+    expect(f.rest().first().eq(cell.FALSE)).toBe(cell.TRUE);
+    expect(f.rest().rest().first().data).toBe(2);
+
   });
 
   it("correctly reads keyword names with numbers", function() {
@@ -106,7 +114,6 @@ describe("Reader", function() {
   it("expands reader macros into forms", function() {
     var r = new cell.Reader("(def test '(1 2 3 4))");
     var f = r.read();
-    console.log(f);
 
     expect(f.count()).toBe(3);
 
