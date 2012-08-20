@@ -85,13 +85,14 @@ cell.demo = (function() {
       return;
     }
 
+    historyCursor++;
+
     var input = document.getElementById('console');
-    var pos = history.length - historyCursor - 1;
+    var pos = history.length - historyCursor;
 
     if (pos <= 0) {
       pos = 0;
-    } else {
-      historyCursor++;
+      historyCursor = history.length;
     }
     
     var curr = history[pos];
@@ -103,13 +104,14 @@ cell.demo = (function() {
       return;
     }
 
+    historyCursor--;
+
     var input = document.getElementById('console');
-    var pos = history.length - historyCursor - 1;
+    var pos = history.length - historyCursor;
 
     if (pos >= (history.length - 1)) {
       pos = history.length - 1;
-    } else {
-      historyCursor--;
+      historyCursor = 0;
     }
 
     var curr = history[pos];
