@@ -66,15 +66,13 @@
 ;; internal count accepting the current position
 (def count*
   (=> (a n)
-      (cond (rest a)
-            (count* (rest a) (inc n))
-
+      (cond a (count* (rest a) (inc n))
             :else n)))
 
 ;; returns the number of elements in the list
 (def count
   (=> (a)
-      (count* a 1)))
+      (count* a 0)))
 
 (def ffirst
   (=> (a)
