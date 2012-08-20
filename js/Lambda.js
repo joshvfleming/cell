@@ -5,8 +5,8 @@
 cell.Lambda = (function() {
   var Lambda = function Lambda(env, argNames, forms) {
     this.env = env;
-    this.argNames = argNames;
-    this.argCount = argNames.count();
+    this.argNames = argNames || cell.FALSE;
+    this.argCount = this.argNames.count();
     this.forms = forms;
   };
 

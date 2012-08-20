@@ -23,7 +23,7 @@ cell.Cell = (function() {
       return Cell.cons(curr, Cell.fromArray(arrDup));
     } 
 
-    return null;
+    return new cell.Cell();
   };
 
   // Returns the head, or first element of the list.
