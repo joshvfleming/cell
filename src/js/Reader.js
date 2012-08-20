@@ -66,12 +66,11 @@ cell.Reader = (function() {
   // Main reader method. Walks the tokens, resolving forms recursively
   // and combining the result into nested Cell lists
   Reader.prototype.read = function() {
-    var token = this.getToken();
     var expr = [];
 
+    var token = this.getToken();
     if (token) {
       if (isOpenTerminal(token)) {
-
         token = this.getToken();
         while (token) {
           if (token.type === 'macro') {
@@ -93,7 +92,11 @@ cell.Reader = (function() {
         }
 
         throw("Error: unbalanced parens");
+      } else {
+        expr.push(token.value);
       }
+
+      return cell.Cell.fromArray(expr);
     }
   };
 
@@ -190,6 +193,9 @@ cell.Reader = (function() {
 
       buffer.push(c);
     }
+
+    // handle any remaining buffer contents
+    tokenizeAndPushBuffer();
 
     return tokens;
   };

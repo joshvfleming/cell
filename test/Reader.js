@@ -33,6 +33,10 @@ describe("Reader", function() {
     expect(f.rest().first().eq(cell.FALSE)).toBe(cell.TRUE);
     expect(f.rest().rest().first().data).toBe(2);
 
+    r = new cell.Reader("3");
+    f = r.read();
+
+    expect(f.first().data).toBe(3);
   });
 
   it("correctly reads keyword names with numbers", function() {
