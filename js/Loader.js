@@ -1,6 +1,7 @@
 /* Loader
  *
  * This is the file loader class.
+ * Changed
  */
 cell.Loader = (function() {
   var Loader = function Loader(){};
