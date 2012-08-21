@@ -21,10 +21,11 @@ describe("Reader", function() {
     token = f.rest().rest().first();
     expect(token.data).toBe(2);
 
-    r = new cell.Reader("(0)");
+    r = new cell.Reader("(+ 1 3 0)");
     f = r.read();
 
-    expect(f.first().data).toBe(0);
+    expect(f.count()).toBe(4)
+    expect(f.rest().rest().rest().first().data).toBe(0);
 
     r = new cell.Reader("(=> () 2)");
     f = r.read();
@@ -33,10 +34,19 @@ describe("Reader", function() {
     expect(f.rest().first().eq(cell.FALSE)).toBe(cell.TRUE);
     expect(f.rest().rest().first().data).toBe(2);
 
-    r = new cell.Reader("3");
-    f = r.read();
+  });
 
-    expect(f.first().data).toBe(3);
+  it("handles single-value input", function() {
+    var r = new cell.Reader("3");
+    var f = r.read();
+
+    expect(f.data, 3);
+
+    var r = new cell.Reader("'(1 2 3)");
+    var f = r.read();
+
+    expect(f.count()).toBe(2);
+    expect(f.first().data).toBe('quote');
   });
 
   it("correctly reads keyword names with numbers", function() {
