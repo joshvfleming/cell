@@ -107,6 +107,11 @@ cell.Cell = (function() {
       return other.empty() ? cell.TRUE : cell.FALSE;
     }
 
+    // other is empty
+    if (other.empty()) {
+      return cell.FALSE;
+    }
+
     equal = this.first().eq(other.first());
     var cmp = equal.eq(cell.TRUE);
     if (!cmp.empty || !cmp.empty()) {

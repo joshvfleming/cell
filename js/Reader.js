@@ -63,6 +63,13 @@ cell.Reader = (function() {
     return token.type === 'terminal' && token.value === 'close';
   };
 
+  // Expands the macro token and following form into an eval'able form
+  // e.g. "'(1 2 3)" => "(quote (1 2 3))"
+  Reader.prototype.expandMacro = function(token) {
+    return new cell.Cell(new cell.Symbol(token.value),
+                         new cell.Cell(this.read())); 
+  };
+
   // Main reader method. Walks the tokens, resolving forms recursively
   // and combining the result into nested Cell lists
   Reader.prototype.read = function() {
@@ -74,11 +81,7 @@ cell.Reader = (function() {
         token = this.getToken();
         while (token) {
           if (token.type === 'macro') {
-            // expand the macro into an eval'able form
-            // e.g. "'(1 2 3)" => "(quote (1 2 3))"
-            var form = new cell.Cell(new cell.Symbol(token.value),
-                                     new cell.Cell(this.read())); 
-            expr.push(form);
+            expr.push(this.expandMacro(token));
           } else if (token.type !== 'terminal') {
             expr.push(token.value);
           } else if (isOpenTerminal(token)) {
@@ -93,7 +96,12 @@ cell.Reader = (function() {
 
         throw("Error: unbalanced parens");
       } else {
-        expr.push(token.value);
+        // value outside parens
+        if (token.type === 'macro') {
+          return this.expandMacro(token);
+        } else {
+          return token.value;
+        }
       }
 
       return cell.Cell.fromArray(expr);
