@@ -11,7 +11,19 @@
 #   - dist/**/*.js
 #
 src_files:
-    - src/js/*.js
+    - src/js/core.js
+    - src/js/Environment.js
+    - src/js/Cell.js
+    - src/js/Number.js
+    - src/js/Atom.js
+    - src/js/Symbol.js
+    - src/js/String.js
+    - src/js/Keyword.js
+    - src/js/Function.js
+    - src/js/Reader.js
+    - src/js/Error.js
+    - src/js/Lambda.js
+    - src/js/Loader.js
 
 # stylesheets
 #
