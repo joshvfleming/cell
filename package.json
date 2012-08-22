@@ -1,0 +1,16 @@
+{
+  "name": "Cell",
+  "version": "0.0.1",
+  "description": "Cell is a Lisp implementation in JavaScript",
+  "keywords": ["Lisp", "JavaScript"],
+  "author": "Josh Fleming <jf@joshfleming.com>",
+  "main": "index",
+  "engines": { "node": ">= 0.4.x < 0.7.0" },
+  "scripts": {
+    "test": "make test"
+  },
+  "devDependencies": {
+    "chai": "*",
+    "mocha": "*"
+  }
+}

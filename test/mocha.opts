@@ -1,0 +1,15 @@
+--globals cell
+--require chai
+--require src/js/core
+--require src/js/Environment
+--require src/js/Cell
+--require src/js/Number
+--require src/js/Atom
+--require src/js/Symbol
+--require src/js/String
+--require src/js/Keyword
+--require src/js/Function
+--require src/js/Reader
+--require src/js/Error
+--require src/js/Lambda
+--require src/js/Loader
