@@ -49,6 +49,7 @@ helpers:
 #   - **/*[sS]pec.js
 #
 spec_files:
+  - **/*.js
 
 # src_dir
 #
