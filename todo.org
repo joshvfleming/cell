@@ -1,10 +1,7 @@
-* Passing empty lists as parameters
-* Decide on how to handle nil/false/empty list
-* Metacircular eval
-* Stack traces?
-* Multiple arity
-* Namespacing?
-* Repl page w/ example links that eval and show the example code
-* Repl page history bugs
-* Repl page formatting
-
+* TODO
+** Metacircular eval
+** Stack traces?
+** Multiple arity
+** Namespacing?
+** Repl page formatting
+** Test cases
