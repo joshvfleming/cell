@@ -1,4 +1,5 @@
 var expect = require('chai').expect;
+var fs = require('fs');
 
 describe("Core", function() {
   var env = null;
@@ -6,6 +7,14 @@ describe("Core", function() {
   beforeEach(function() {
     cell.init();
     env = cell.environment;
+
+    // require the core lib
+    var core = fs.readFileSync('src/cell/core.cell', 'utf8');
+    var r = new cell.Reader(core);
+    var f = null;
+    while (f = r.read()) {
+      f.eval(cell.environment);
+    }
   });
 
   it("executes simple mathematical operations", function() {
@@ -58,6 +67,11 @@ describe("Core", function() {
 
     expect(f.eval(cell.environment).data).to.equal(31);
 
+    r = new cell.Reader("(inc 1)");
+    f = r.read()
+
+    expect(f.eval(cell.environment).data).to.equal(2);
+
     r = new cell.Reader("(def myfunc (=> (a b) (+ a b)))");
     f = r.read()
 
@@ -67,5 +81,49 @@ describe("Core", function() {
     f = r.read()
 
     expect(f.eval(cell.environment).data).to.equal(5);
+
+    r = new cell.Reader("(take 3 '(1 2 3 4))");
+    f = r.read()
+    var res = f.eval(cell.environment);
+    expect(res.count()).to.equal(3);
+    expect(res.first().data).to.equal(1);
+    expect(res.rest().first().data).to.equal(2);
+    expect(res.rest().rest().first().data).to.equal(3);
+
+    r = new cell.Reader("(reduce + 0 (map inc '(1 2 3 4)))");
+    f = r.read()
+    res = f.eval(cell.environment);
+    expect(res.data).to.equal(14);
+  });
+
+  it("handles lexical scope", function() {
+    var r = new cell.Reader("(def a 217)");
+    var f = r.read()
+    f.eval(cell.environment);
+
+    r = new cell.Reader("(def myadd (=> (a) (=> (b) (+ a b))))");
+    f = r.read()
+    f.eval(cell.environment);
+
+    r = new cell.Reader("(def add-2 (myadd 2))");
+    f = r.read()
+    f.eval(cell.environment);
+
+    r = new cell.Reader("(add-2 5)");
+    f = r.read()
+    expect(f.eval(cell.environment).data).to.equal(7);
+
+    r = new cell.Reader("(add-2 17)");
+    f = r.read()
+    expect(f.eval(cell.environment).data).to.equal(19);
+
+    // using the version of 'a' def'ed in parent env
+    r = new cell.Reader("(def myadd2 (=> (b) (+ a b)))");
+    f = r.read()
+    f.eval(cell.environment);
+
+    r = new cell.Reader("(myadd2 5)");
+    f = r.read()
+    expect(f.eval(cell.environment).data).to.equal(222);
   });
 });
