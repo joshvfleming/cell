@@ -96,6 +96,56 @@ describe("Core", function() {
     expect(res.data).to.equal(14);
   });
 
+  it("returns the correct value for the Fibonacci example", function() {
+    var fib = fs.readFileSync('src/cell/examples/fibonacci.cell', 'utf8');
+    var r = new cell.Reader(fib);
+    var f = null;
+    var res = null;
+    while (f = r.read()) {
+      res = f.eval(cell.environment);
+    }
+
+    expect(res.data).to.equal(89);
+  });
+
+  it("returns the correct value for the Hanoi example", function() {
+    var fib = fs.readFileSync('src/cell/examples/hanoi.cell', 'utf8');
+    var r = new cell.Reader(fib);
+    var f = null;
+    var res = null;
+    while (f = r.read()) {
+      res = f.eval(cell.environment);
+    }
+
+    expect(res.count()).to.equal(7);
+    expect(res.first().first().data).to.equal(1);
+    expect(res.first().rest().first().name).to.equal(':peg3');
+
+    expect(res.rest().first().first().data).to.equal(2);
+    expect(res.rest().first().rest().first().name).to.equal(':peg2');
+
+    expect(res.rest().rest().first().first().data).to.equal(1);
+    expect(res.rest().rest().first().rest().first().name).to.equal(':peg2');
+
+    expect(res.rest().rest().rest().first().first().data).to.equal(3);
+    expect(res.rest().rest().rest().first().rest().first().name)
+      .to.equal(':peg3');
+
+    expect(res.rest().rest().rest().rest().first().first().data).to.equal(1);
+    expect(res.rest().rest().rest().rest().first().rest().first().name)
+      .to.equal(':peg1');
+
+    expect(res.rest().rest().rest().rest().rest().first().first().data)
+      .to.equal(2);
+    expect(res.rest().rest().rest().rest().rest().first().rest().first().name)
+      .to.equal(':peg3');
+
+    expect(res.rest().rest().rest().rest().rest().rest().first().first().data)
+      .to.equal(1);
+    expect(res.rest().rest().rest().rest().rest().rest().first().rest().first()
+           .name).to.equal(':peg3');
+  });
+
   it("handles lexical scope", function() {
     var r = new cell.Reader("(def a 217)");
     var f = r.read()
