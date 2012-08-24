@@ -1,6 +1,6 @@
 var expect = require('chai').expect;
 
-describe("Keyword", function() {
+describe("Symbol", function() {
   var a = new cell.Symbol('a');
   var b = new cell.Symbol('b');
   var c = new cell.Symbol('a');
