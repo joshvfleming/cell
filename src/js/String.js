@@ -24,7 +24,7 @@ cell.String = (function() {
 
   // Returns the string representation for a String
   String.prototype.toString = function() {
-    return this.data;
+    return '"' + this.data + '"';
   };
 
   return String;

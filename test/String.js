@@ -23,7 +23,7 @@ describe("String", function() {
   });
 
   it("converts to string", function() {
-    expect(a.toString()).to.equal('str1');
-    expect(b.toString()).to.equal('str2');
+    expect(a.toString()).to.equal('"str1"');
+    expect(b.toString()).to.equal('"str2"');
   });
 })

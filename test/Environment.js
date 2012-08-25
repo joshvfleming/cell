@@ -33,8 +33,8 @@ describe("Environment", function() {
     var env = new cell.Environment();
 
     env.setAll(env,
-               cell.Cell.fromArray([new cell.String('arg1'),
-                                    new cell.String('arg2')]),
+               cell.Cell.fromArray([new cell.Symbol('arg1'),
+                                    new cell.Symbol('arg2')]),
                cell.Cell.fromArray([new cell.Number(1),
                                     new cell.Number(4)]));
 
