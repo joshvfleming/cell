@@ -64,7 +64,7 @@ describe("Reader", function() {
     expect(token.data).to.equal('test');
 
     token = f.rest().rest().first();
-    expect(token.name).to.equal(':test2');
+    expect(token.data).to.equal(':test2');
   });
 
   it("handles nested expressions", function() {

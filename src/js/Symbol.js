@@ -4,7 +4,8 @@
  */
 cell.Symbol = (function() {
   var Symbol = function Symbol(data) {
-    this.data = data || null;
+    // call base class constructor
+    cell.Atom.call(this, data || null);
   };
 
   Symbol.PATTERN = /.+/;
@@ -21,16 +22,6 @@ cell.Symbol = (function() {
     }
 
     return val;
-  };
-
-  // Tests for equality between Symbols
-  Symbol.prototype.eq = function eq(other) {
-    return this.data === other.data ? cell.TRUE : cell.FALSE;
-  };
-
-  // Returns the string representations for a Symbol
-  Symbol.prototype.toString = function toString() {
-    return this.data;
   };
 
   // special symbols

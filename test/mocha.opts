@@ -3,8 +3,8 @@
 --require src/js/core
 --require src/js/Environment
 --require src/js/Cell
---require src/js/Number
 --require src/js/Atom
+--require src/js/Number
 --require src/js/Symbol
 --require src/js/String
 --require src/js/Keyword

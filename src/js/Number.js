@@ -19,21 +19,20 @@ cell.Number = (function() {
       }
     }
 
-    this.data = data;
+    // call base class constructor
+    cell.Atom.call(this, data);
   };
 
   Number.PATTERN = /^\-?\d+(\.\d+)?(e\-?\d+)?$/;
   Number.FLOAT_PATTERN = /\./;
   Number.DEFAULT_RADIX = 10;
 
+  // Inherit from Atom
+  Number.prototype = new cell.Atom();
+
   // Number eval. Numbers eval to themselves.
   Number.prototype.eval = function eval() {
     return this;
-  };
-
-  // Tests for equality between Numbers
-  Number.prototype.eq = function eq(other) {
-    return this.data === other.data ? cell.TRUE : cell.FALSE;
   };
 
   // Performs the '+' mathematical operation between two numbers
@@ -59,11 +58,6 @@ cell.Number = (function() {
   // Performs the '%' mathematical operation between two numbers
   Number.prototype.mod = function mod(other) {
     return new Number(this.data % other.data);
-  };
-
-  // Returns the string representation for a Number
-  Number.prototype.toString = function() {
-    return this.data.toString();
   };
 
   return Number;

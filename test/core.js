@@ -119,31 +119,31 @@ describe("Core", function() {
 
     expect(res.count()).to.equal(7);
     expect(res.first().first().data).to.equal(1);
-    expect(res.first().rest().first().name).to.equal(':peg3');
+    expect(res.first().rest().first().data).to.equal(':peg3');
 
     expect(res.rest().first().first().data).to.equal(2);
-    expect(res.rest().first().rest().first().name).to.equal(':peg2');
+    expect(res.rest().first().rest().first().data).to.equal(':peg2');
 
     expect(res.rest().rest().first().first().data).to.equal(1);
-    expect(res.rest().rest().first().rest().first().name).to.equal(':peg2');
+    expect(res.rest().rest().first().rest().first().data).to.equal(':peg2');
 
     expect(res.rest().rest().rest().first().first().data).to.equal(3);
-    expect(res.rest().rest().rest().first().rest().first().name)
+    expect(res.rest().rest().rest().first().rest().first().data)
       .to.equal(':peg3');
 
     expect(res.rest().rest().rest().rest().first().first().data).to.equal(1);
-    expect(res.rest().rest().rest().rest().first().rest().first().name)
+    expect(res.rest().rest().rest().rest().first().rest().first().data)
       .to.equal(':peg1');
 
     expect(res.rest().rest().rest().rest().rest().first().first().data)
       .to.equal(2);
-    expect(res.rest().rest().rest().rest().rest().first().rest().first().name)
+    expect(res.rest().rest().rest().rest().rest().first().rest().first().data)
       .to.equal(':peg3');
 
     expect(res.rest().rest().rest().rest().rest().rest().first().first().data)
       .to.equal(1);
     expect(res.rest().rest().rest().rest().rest().rest().first().rest().first()
-           .name).to.equal(':peg3');
+           .data).to.equal(':peg3');
   });
 
   it("handles lexical scope", function() {
