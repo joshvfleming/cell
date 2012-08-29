@@ -13,6 +13,7 @@ cell.demo = (function() {
 
   var INPUT_QUOTE = ">>> ";
 
+  // Startup
   demo.init = function init() {
     var console = document.getElementById('console');
 
@@ -24,6 +25,8 @@ cell.demo = (function() {
     console.focus();
   };
 
+  // This is a replacement for the jQuery 'on' cross-browser event
+  // binding API
   demo.on = function on(el, eventName, handler) {
     if (el.addEventListener) {
       el.addEventListener(eventName, handler, false);
@@ -32,6 +35,7 @@ cell.demo = (function() {
     }
   };
 
+  // Bind all of the view's events
   demo.bindEvents = function bindEvents() {
     var evalBtn = document.getElementById('eval-btn');
     demo.on(evalBtn, 'click', demo.evalClicked);
@@ -39,13 +43,14 @@ cell.demo = (function() {
     var console = document.getElementById('console');
     demo.on(console, 'keydown', demo.consoleKeydown);
 
-    var fib = document.getElementById('fib-btn');
-    demo.on(fib, 'click', demo.fibClicked);
-
-    var hanoi = document.getElementById('hanoi-btn');
-    demo.on(hanoi, 'click', demo.hanoiClicked);
+    var examples = document.getElementsByClassName('example-btn');
+    for (var i=0, l=examples.length; i<l; i++) {
+      var ex = examples[i];
+      demo.on(ex, 'click', demo.exampleClicked);
+    }
   };
 
+  // Evals the code and displays the result
   demo.eval = function(data) {
     var consoleOutput = document.getElementById('console-output');
 
@@ -67,6 +72,7 @@ cell.demo = (function() {
     consoleOutput.scrollTop = consoleOutput.scrollHeight;
   };
 
+  // Click handler for the "eval" button
   demo.evalClicked = function evalClicked(e) {
     e.preventDefault();
 
@@ -82,6 +88,7 @@ cell.demo = (function() {
     input.focus();
   };
 
+  // Moves the previously entered command into the console input field
   demo.prevHistory = function() {
     if (!history.length) {
       return;
@@ -101,6 +108,7 @@ cell.demo = (function() {
     input.value = curr;
   };
 
+  // Moves the next entered command into the console input field
   demo.nextHistory = function() {
     if (!history.length) {
       return;
@@ -120,6 +128,7 @@ cell.demo = (function() {
     input.value = curr;
   };
 
+  // Handler for console key down
   demo.consoleKeydown = function(e) {
     switch(e.keyCode) {
       case ENTER:
@@ -136,22 +145,27 @@ cell.demo = (function() {
     }
   };
 
-  demo.fibClicked = function(e) {
-    e.preventDefault();
+  // Loads the example program at the given path, and evals it
+  demo.loadAndEvalExample = function(path) {
+    var input = document.getElementById('console');
 
-    cell.Loader.get('cell/examples/fibonacci.cell', {
+    cell.Loader.get(path, {
       success: function(data) {
         demo.eval(data);
+        input.focus();
+      },
+      error: function(data) {
+        // TODO output error message
+        input.focus();
       }});
   };
 
-  demo.hanoiClicked = function(e) {
+  // Click handler for the example links
+  demo.exampleClicked = function(e) {
     e.preventDefault();
 
-    cell.Loader.get('cell/examples/hanoi.cell', {
-      success: function(data) {
-        demo.eval(data);
-      }});
+    var button = e.target;
+    demo.loadAndEvalExample(button.href);
   };
 
   // init on page ready
