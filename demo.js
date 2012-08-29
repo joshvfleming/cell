@@ -80,10 +80,14 @@ cell.demo = (function() {
     var val = input.value;
     input.value = '';
 
-    demo.eval(val);
+    // Put eval on the event loop, so that potentially slow evals do
+    // not block the UI
+    setTimeout(function() {
+      demo.eval(val);
 
-    history.push(val);
-    historyCursor = 0;
+      history.push(val);
+      historyCursor = 0;
+    }, 1);
 
     input.focus();
   };
