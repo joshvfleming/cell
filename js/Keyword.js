@@ -3,8 +3,9 @@
  * This is the symbol representation class.
  */
 cell.Keyword = (function() {
-  var Keyword = function Keyword(name) {
-    this.name = name;
+  var Keyword = function Keyword(data) {
+    // call base class constructor
+    cell.Atom.call(this, data);
   };
 
   Keyword.PATTERN = /\:.+/;
@@ -33,11 +34,6 @@ cell.Keyword = (function() {
   // Tests for equality between Keywords
   Keyword.prototype.eq = function eq(other) {
     return this === other ? cell.TRUE : cell.FALSE;
-  };
-
-  // Returns the string representation for a Keyword
-  Keyword.prototype.toString = function() {
-    return this.name;
   };
 
   return Keyword;

@@ -158,3 +158,8 @@ var cell = (function() {
 
   return cell;
 })();
+
+// support node.js
+if (typeof global !== 'undefined') {
+   global.cell = cell;
+}

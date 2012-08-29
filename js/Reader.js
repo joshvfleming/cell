@@ -1,7 +1,6 @@
 /* Reader
  *
  * This is the symbol representation class.
- * Changed
  */
 cell.Reader = (function() {
   var _terminalSet = {

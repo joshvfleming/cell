@@ -4,7 +4,8 @@
  */
 cell.String = (function() {
   var String = function String(data) {
-    this.data = data || null;
+    // call base class constructor
+    cell.Atom.call(this, data || null);
   };
 
   String.PATTERN = /"/;
@@ -17,14 +18,9 @@ cell.String = (function() {
     return this;
   };
 
-  // Tests for equality between Strings
-  String.prototype.eq = function eq(other) {
-    return this.data === other.data ? cell.TRUE : cell.FALSE;
-  };
-
   // Returns the string representation for a String
   String.prototype.toString = function() {
-    return this.data;
+    return '"' + this.data + '"';
   };
 
   return String;
