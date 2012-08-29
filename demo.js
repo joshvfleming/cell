@@ -11,6 +11,8 @@ cell.demo = (function() {
   var UP = 38;
   var DOWN = 40;
 
+  var INPUT_QUOTE = ">>> ";
+
   demo.init = function init() {
     var console = document.getElementById('console');
 
@@ -59,7 +61,7 @@ cell.demo = (function() {
     }
 
     consoleOutput.value = consoleOutput.value + "\n" +
-      data + "\n" +
+      INPUT_QUOTE + data.replace(/\n/g, '\n' + INPUT_QUOTE) + "\n" +
       output + "\n";
 
     consoleOutput.scrollTop = consoleOutput.scrollHeight;
