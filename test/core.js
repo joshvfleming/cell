@@ -146,6 +146,18 @@ describe("Core", function() {
            .data).to.equal(':peg3');
   });
 
+  it("returns the correct value for the binomial coefficient example", function() {
+    var fib = fs.readFileSync('src/cell/examples/binomial_coefficient.cell', 'utf8');
+    var r = new cell.Reader(fib);
+    var f = null;
+    var res = null;
+    while (f = r.read()) {
+      res = f.eval(cell.environment);
+    }
+
+    expect(res.data).to.equal(10);
+  });
+
   it("handles lexical scope", function() {
     var r = new cell.Reader("(def a 217)");
     var f = r.read()
