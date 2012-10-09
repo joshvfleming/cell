@@ -1,0 +1,10 @@
+; binomial coefficient
+
+(def n-choose-k
+  (=> (n k)
+      (cond (= k 0) 1
+            (= k n) 1
+            :else (+ (n-choose-k (dec n) (dec k))
+                     (n-choose-k (dec n) k)))))
+
+(n-choose-k 5 3)
