@@ -157,10 +157,14 @@ cell.demo = (function() {
       success: function(data) {
         demo.eval(data);
         input.focus();
+
+        demo.removeLoaders();
       },
       error: function(data) {
         // TODO output error message
         input.focus();
+
+        demo.removeLoaders();
       }});
   };
 
@@ -169,7 +173,28 @@ cell.demo = (function() {
     e.preventDefault();
 
     var button = e.target;
+
+    demo.appendLoader(button.parentNode);
+
     demo.loadAndEvalExample(button.href);
+  };
+
+  // appends a loader to the element
+  demo.appendLoader = function(parent) {
+    var loader = document.createElement('img');
+    loader.className = 'loader';
+    loader.src = 'loader.gif';
+    parent.appendChild(loader);
+  };
+
+  // removes page loaders
+  demo.removeLoaders = function() {
+    var loaders = document.getElementsByClassName('loader');
+    for (var i=0, l=loaders.length; i<l; i++) {
+      var loader = loaders[i];
+
+      loader.parentNode.removeChild(loader);
+    }
   };
 
   // init on page ready
