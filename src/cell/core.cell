@@ -98,6 +98,14 @@
   (=> (a)
       (first (rest (rest (rest (first a)))))))
 
+(def rrest
+  (=> (a)
+      (rest (rest a))))
+
+(def list
+  (=> (a b)
+      (cons a (cons b '()))))
+
 ;; Returns a new list containing the result of applying the function
 ;; to each item of the given list
 (def map
@@ -132,7 +140,51 @@
       (cond a (cons (take n a) (partition n (drop n a)))
             :else nil)))
 
+;; Returns the value from the association list with key k.
+;; NOTE: This has O(n) lookup time complexity, and should eventually
+;; be changed to a tree lookup.
+(def get
+  (=> (m k)
+      (cond (eq (ffirst m) k) (frfirst m)
+
+            :else
+            (get (rest m) k))))
+
+;; Returns elements from lists x and y paired up by position
+(def pair
+  (=> (x y)
+      (cond (not (and x y)) nil
+            
+            (not (and (atom x) (atom y)))
+            (cons (list (first x) (first y))
+                  (pair (rest x) (rest y))))))
+
 ;; TODO eval
+(def eval-cond
+  (=> (c a)
+      (cond (eval (first c) a) (eval (frest c) a)
+
+            :else
+            (eval-cond (rrest c) a))))
+
+(def eval-list
+  (=> (m a)
+      (cond (null m) nil
+            
+            :else
+            (cons (eval (first m) a) (eval-list (rest m) a)))))
+
 (def eval
-  (=> (e)
-      nil))
+  (=> (e a)
+      (cond (atom e) (get a e)
+            (atom (first e))
+                  (cond (eq (first e) 'quote) (frest e)
+                        (eq (first e) 'atom) (atom (eval (frest e) a))
+                        (eq (first e) 'eq) (eq (eval (frest e) a) (eval (frrest e) a))
+                        (eq (first e) 'cond) (eval-cond (rest e) a)
+                        (eq (first e) 'first) (first (eval (frest e) a))
+                        (eq (first e) 'rest) (rest (eval (frest e) a))
+                        (eq (first e) 'cons) (cons (eval (frest e) a) (eval (frrest e) a))
+                        :else (eval (cons (get a (first e))) a))
+            (eq (ffirst e) 'def) nil
+            (eq (ffirst e) 'lambda) nil)))
