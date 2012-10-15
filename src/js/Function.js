@@ -13,6 +13,11 @@ cell.Function = (function() {
     return this.fn(env, args);
   };
 
+  // Tests for equality between Functions
+  Function.prototype.eq = function eq(other) {
+    return this === other;
+  };
+
   // Returns the string representation for a Function
   Function.prototype.toString = function() {
     return "<Function>";
