@@ -1,0 +1,9 @@
+#!/bin/bash
+
+if [[ -d build ]]; then
+   rm -fr build
+fi
+
+mkdir build
+cp -fr demo/* build
+cp -fr src/* build
