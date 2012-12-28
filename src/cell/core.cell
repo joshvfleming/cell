@@ -184,7 +184,5 @@
                         (eq (first e) 'cond) (eval-cond (rest e) a)
                         (eq (first e) 'first) (first (eval (frest e) a))
                         (eq (first e) 'rest) (rest (eval (frest e) a))
-                        (eq (first e) 'cons) (cons (eval (frest e) a) (eval (frrest e) a))
-                        :else (eval (cons (get a (first e))) a))
-            (eq (ffirst e) 'def) nil
-            (eq (ffirst e) 'lambda) nil)))
+                        (eq (first e) 'cons) (cons (eval (frest e) a) (eval (frrest e) a)))
+                  :else e)))

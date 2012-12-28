@@ -27,9 +27,6 @@ cell.Number = (function() {
   Number.FLOAT_PATTERN = /\./;
   Number.DEFAULT_RADIX = 10;
 
-  // Inherit from Atom
-  Number.prototype = new cell.Atom();
-
   // Number eval. Numbers eval to themselves.
   Number.prototype.eval = function eval() {
     return this;
@@ -58,6 +55,21 @@ cell.Number = (function() {
   // Performs the '%' mathematical operation between two numbers
   Number.prototype.mod = function mod(other) {
     return new Number(this.data % other.data);
+  };
+
+  // TODO this is a temporary hack to get eval working
+  Number.prototype.first = function first() {
+    return this.data;
+  };
+
+  // Tests for equality between numbers
+  Number.prototype.eq = function eq(other) {
+    return this.data === other.data ? cell.TRUE : cell.FALSE;
+  };
+
+  // Returns the string representation for a Number
+  Number.prototype.toString = function toString() {
+    return this.data.toString();
   };
 
   return Number;

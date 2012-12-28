@@ -188,4 +188,27 @@ describe("Core", function() {
     f = r.read()
     expect(f.eval(cell.environment).data).to.equal(222);
   });
+
+  it("provides eval", function() {
+    var r = new cell.Reader("(eval '(eq 1 2) '())");
+    var e = r.read();
+
+    expect(e.eval(cell.environment)).to.equal(cell.FALSE);
+
+    r = new cell.Reader("(eval '(eq 3 3) '())");
+    e = r.read();
+
+    expect(e.eval(cell.environment)).to.equal(cell.TRUE);
+
+    r = new cell.Reader("(eval '(cond (eq 1 2) 1 'T 2) '())");
+    e = r.read();
+
+    expect(e.eval(cell.environment).data).to.equal(2);
+
+    r = new cell.Reader("(eval '(cond (eq 1 1) 1 'T 2) '())");
+    e = r.read();
+
+    expect(e.eval(cell.environment).data).to.equal(1);
+
+  });
 });

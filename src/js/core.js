@@ -75,7 +75,7 @@ var cell = (function() {
   // first
   cell.first = function first(env, args) {
     cell.Error.assertArgCount(args, 1);
-    return args.first().eval(env).first().eval(env);
+    return args.first().eval(env).first();
   };
 
   // rest
