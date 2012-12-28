@@ -11,4 +11,4 @@ clean:
 test:
 	./node_modules/.bin/mocha --reporter list
 
-.PHONY: test	
+.PHONY: build-web clean test	
