@@ -4,8 +4,7 @@
  */
 cell.Keyword = (function() {
   var Keyword = function Keyword(data) {
-    // call base class constructor
-    cell.Atom.call(this, data);
+    this.data = data;
   };
 
   Keyword.PATTERN = /\:.+/;
@@ -34,6 +33,11 @@ cell.Keyword = (function() {
   // Tests for equality between Keywords
   Keyword.prototype.eq = function eq(other) {
     return this === other ? cell.TRUE : cell.FALSE;
+  };
+
+  // Returns the string representation for a Keyword
+  Keyword.prototype.toString = function toString() {
+    return this.data.toString();
   };
 
   return Keyword;
