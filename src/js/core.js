@@ -30,6 +30,11 @@ var cell = (function() {
       env.set('*', new cell.Function(cell.mult));
       env.set('/', new cell.Function(cell.div));
       env.set('mod', new cell.Function(cell.mod));
+
+      // Type introspection
+      env.set('number?', new cell.Function(cell.isNumber));
+      env.set('string?', new cell.Function(cell.isString));
+      env.set('keyword?', new cell.Function(cell.isKeyword));
     }
   };
 
@@ -40,6 +45,30 @@ var cell = (function() {
   // Determines 'truthiness'
   cell.isTruthy = function(pred) {
     return (cell.FALSE.eq(pred).empty && cell.FALSE.eq(pred).empty()); 
+  };
+
+  // Determines whether the argument is of a specific type
+  cell.isType = function(type, env, args) {
+    cell.Error.assertArgCount(args, 1);
+
+    var val = args.first().eval(env);
+
+    return (val instanceof type) ? cell.TRUE : cell.FALSE;
+  }
+
+  // Determines whether the argument is a number
+  cell.isNumber = function(env, args) {
+    return cell.isType(cell.Number, env, args);
+  };
+
+  // Determines whether the argument is a string
+  cell.isString = function(env, args) {
+    return cell.isType(cell.String, env, args);
+  };
+
+  // Determines whether the argument is a keyword
+  cell.isKeyword = function(env, args) {
+    return cell.isType(cell.Keyword, env, args);
   };
 
   // cond

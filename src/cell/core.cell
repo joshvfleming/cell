@@ -176,13 +176,16 @@
 
 (def eval
   (=> (e a)
-      (cond (atom e) (get a e)
+      (cond (number? e) e
+            (string? e) e
+            (keyword? e) e
+            (atom e) (get a e)
             (atom (first e))
-                  (cond (eq (first e) 'quote) (frest e)
-                        (eq (first e) 'atom) (atom (eval (frest e) a))
-                        (eq (first e) 'eq) (eq (eval (frest e) a) (eval (frrest e) a))
-                        (eq (first e) 'cond) (eval-cond (rest e) a)
-                        (eq (first e) 'first) (first (eval (frest e) a))
-                        (eq (first e) 'rest) (rest (eval (frest e) a))
-                        (eq (first e) 'cons) (cons (eval (frest e) a) (eval (frrest e) a)))
-                  :else e)))
+              (cond (eq (first e) 'quote) (frest e)
+                    (eq (first e) 'atom) (atom (eval (frest e) a))
+                    (eq (first e) 'eq) (eq (eval (frest e) a) (eval (frrest e) a))
+                    (eq (first e) 'cond) (eval-cond (rest e) a)
+                    (eq (first e) 'first) (first (eval (frest e) a))
+                    (eq (first e) 'rest) (rest (eval (frest e) a))
+                    (eq (first e) 'cons) (cons (eval (frest e) a) (eval (frrest e) a)))
+            )))
