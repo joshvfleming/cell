@@ -190,5 +190,4 @@
                     (eq (first e) 'cons) (cons (eval (frest e) a) (eval (frrest e) a))
 
                     ;; function call
-                    :else (eval (cons (get a (first e)) (eval-list (rest e) a)) a))
-              (eq (ffirst e) 'def ) )))
+                    :else (eval (cons (get a (first e)) (eval-list (rest e) a)) a)))))
