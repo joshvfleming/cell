@@ -190,4 +190,9 @@
                     (eq (first e) 'cons) (cons (eval (frest e) a) (eval (frrest e) a))
 
                     ;; function call
-                    :else (eval (cons (get a (first e)) (eval-list (rest e) a)) a)))))
+                    :else (eval (cons (get a (first e)) (eval-list (rest e) a)) a))
+            (eq (ffirst e) 'def) (eval (cons (frrfirst e) (rest e))
+                                       (cons (list (frfirst e) (first e)) a))
+            (eq (ffirst e) 'lambda) (eval (frrfirst e)
+                                          (append (pair (frfirst e)
+                                                        (eval-list (rest e) a)) a)))))
