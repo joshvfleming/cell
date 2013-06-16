@@ -159,6 +159,15 @@
             (cons (list (first x) (first y))
                   (pair (rest x) (rest y))))))
 
+;; Appends the first element to the second
+(def append
+  (=> (x y)
+      (cond (not x) y
+
+            :else
+            (cons (first x) (append (rest x) y)))))
+
+
 ;; TODO eval
 (def eval-cond
   (=> (c a)
@@ -169,7 +178,7 @@
 
 (def eval-list
   (=> (m a)
-      (cond (null m) nil
+      (cond (not m) nil
             
             :else
             (cons (eval (first m) a) (eval-list (rest m) a)))))
