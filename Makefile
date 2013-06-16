@@ -1,4 +1,4 @@
-build-web: clean
+web-repl: clean
 	@echo Building web REPL...
 	@mkdir build
 	@cp -fr demo/* build
