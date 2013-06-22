@@ -15,6 +15,6 @@ This implementation was influenced heavily by:
 License
 -------
 
-Copyright &copy; 2012 Josh Fleming
+Copyright &copy; 2013 Joshua Fleming
 
 Distributed under the Eclipse Public License.
