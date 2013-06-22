@@ -19,8 +19,7 @@ cell.Number = (function() {
       }
     }
 
-    // call base class constructor
-    cell.Atom.call(this, data);
+    this.data = data;
   };
 
   Number.PATTERN = /^\-?\d+(\.\d+)?(e\-?\d+)?$/;

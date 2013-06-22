@@ -159,6 +159,15 @@
             (cons (list (first x) (first y))
                   (pair (rest x) (rest y))))))
 
+;; Appends the first element to the second
+(def append
+  (=> (x y)
+      (cond (not x) y
+
+            :else
+            (cons (first x) (append (rest x) y)))))
+
+
 ;; TODO eval
 (def eval-cond
   (=> (c a)
@@ -169,20 +178,30 @@
 
 (def eval-list
   (=> (m a)
-      (cond (null m) nil
+      (cond (not m) nil
             
             :else
             (cons (eval (first m) a) (eval-list (rest m) a)))))
 
 (def eval
   (=> (e a)
-      (cond (atom e) (get a e)
+      (cond (number? e) e
+            (string? e) e
+            (keyword? e) e
+            (atom e) (get a e)
             (atom (first e))
-                  (cond (eq (first e) 'quote) (frest e)
-                        (eq (first e) 'atom) (atom (eval (frest e) a))
-                        (eq (first e) 'eq) (eq (eval (frest e) a) (eval (frrest e) a))
-                        (eq (first e) 'cond) (eval-cond (rest e) a)
-                        (eq (first e) 'first) (first (eval (frest e) a))
-                        (eq (first e) 'rest) (rest (eval (frest e) a))
-                        (eq (first e) 'cons) (cons (eval (frest e) a) (eval (frrest e) a)))
-                  :else e)))
+              (cond (eq (first e) 'quote) (frest e)
+                    (eq (first e) 'atom) (atom (eval (frest e) a))
+                    (eq (first e) 'eq) (eq (eval (frest e) a) (eval (frrest e) a))
+                    (eq (first e) 'cond) (eval-cond (rest e) a)
+                    (eq (first e) 'first) (first (eval (frest e) a))
+                    (eq (first e) 'rest) (rest (eval (frest e) a))
+                    (eq (first e) 'cons) (cons (eval (frest e) a) (eval (frrest e) a))
+
+                    ;; function call
+                    :else (eval (cons (get a (first e)) (eval-list (rest e) a)) a))
+            (eq (ffirst e) 'def) (eval (cons (frrfirst e) (rest e))
+                                       (cons (list (frfirst e) (first e)) a))
+            (eq (ffirst e) 'lambda) (eval (frrfirst e)
+                                          (append (pair (frfirst e)
+                                                        (eval-list (rest e) a)) a)))))
